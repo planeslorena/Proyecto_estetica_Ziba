@@ -1,9 +1,34 @@
-/* eslint-disable prefer-promise-reject-errors */
+'use client'
 import axios from 'axios';
 
-const clienteAxios = axios.create({
-  baseURL: 'http://localhost:8080/',
-});
+const createClient = () => {
+  const client = axios.create({
+    baseURL: 'http://localhost:8080/'
+  });
+  return client;
+}
+const clientAxios = createClient();
+export default clientAxios;
+
+//crea un interceptor de la request, cuando se envia una request con el clientAxios chequea si hay token y lo agrega en los headers
+clientAxios.interceptors.request.use((request) => {
+  if (sessionStorage.getItem("accessToken")) {
+    request.headers.Authorization = `Bearer ${sessionStorage.getItem("accessToken")}`;
+  }
+  return request;
+})
+
+/*export const setAuthToken = (token:any) => {
+  if (token) {
+      // Si hay token vigente lo carga en los headers
+      clientAxios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  } else {
+      // Borra header de autorización
+      delete clientAxios.defaults.headers.common['Authorization'];
+  }
+};
+*/
+
 /*
 clienteAxios.interceptors.response.use(
   (response) => response,
@@ -32,4 +57,3 @@ clienteAxios.interceptors.response.use(
   }
 );*/
 
-export default clienteAxios;

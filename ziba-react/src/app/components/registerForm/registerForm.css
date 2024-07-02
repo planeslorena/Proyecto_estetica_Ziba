@@ -6,7 +6,7 @@ body{
   margin: 60px auto;
   max-width: 1200px;
   width: 85%;
-  box-shadow: 5px 5px 5px #ad9a9a;
+  box-shadow: 5px 5px 5px #9e7676;
 }
 
 .container-form-register{
@@ -48,20 +48,40 @@ body{
   background-color: var(--bs-body-bg);
   background-clip: padding-box;
   border: var(--bs-border-width) solid var(--bs-border-color);
-  transition: border-color .15s ease-in-out, box-shadow #AD9A9A .15s ease-in-out;
+  transition: border-color .15s ease-in-out; 
+  box-shadow: 2px 2px#594545;
+}
+
+.form-input-register:focus {
+  border-color: #594545 !important;
+  outline: none !important;
+}
+
+
+.form-input-register::-ms-reveal,
+.form-input-register::-ms-clear {
+  display: none;
+}
+
+.field-name {
+  margin-right: 3px;
+}
+
+.field-password {
+  margin-right: 3px;
 }
 
 .title-register{
   display: flex;
   flex-direction: column;
   text-align: center;
-  color: #31123C;
+  color: #594545;
   font-size: 20px;
   margin-bottom: 15px;
 }
 
 .form-label-register{
-  color: #31123C;
+  color: #594545;
   padding: 5px;
   font-size: 15px;
 }
@@ -92,14 +112,14 @@ body{
 }
 
 .button-register{
-  background-color: #987a9d;
+  background-color: #9e7676;
   margin-top: 15px;
-  width:400px ;
+  width:100%;
   color: white;
 
 }
 .a-login{
-  color: #31123C;
+  color: #594545;
 }
 .container-question-register{
   margin-top: 5px;
@@ -112,5 +132,5 @@ body{
 }
 
 .text-validation-register{
-  color:brown;
+  color:red;
 }

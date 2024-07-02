@@ -1,13 +1,12 @@
 'use client'
-import { Logo } from "@/app/components/logo/logo";
+import { withRoles } from "@/app/components/HOC/whitRoles";
 import { Menu } from "@/app/components/nav/nav";
 
-export default function AuthPage() {
+function AdminPage() {
   return (
     <>
       <header>
         <div>
-            <Logo></Logo>
             <Menu></Menu>
         </div>
 
@@ -19,3 +18,5 @@ export default function AuthPage() {
     </>
   )
 }
+
+export default withRoles(AdminPage,'admin', '/home')

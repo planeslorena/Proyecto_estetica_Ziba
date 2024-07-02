@@ -1,0 +1,52 @@
+.img-armchairs{
+    width: 350px;
+    height: 270px;
+    margin-top: 30px;
+    
+   
+}
+.title-cafe{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #594545;
+    margin-top: 10%;
+}
+.img-cafeteria{
+    height:500px;
+    width: 390px;
+    padding: 15px;
+    margin-top: 15px;
+}
+
+.container-img-cafe{
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.square-violet{
+    height: 210px;
+    width: 370px;
+    background-color: #b8989871;
+    position: absolute;
+    margin-top: 270px;
+    margin-right: 340px;
+}
+
+.text-square{
+    font-size: 15px;
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    color: #594545;
+}
+
+.border-violet{
+    height: 210px;
+    width: 370px;
+    border: 2px solid #594545;
+    position: absolute;
+    margin-top: 285px;
+    margin-right: 320px;
+}

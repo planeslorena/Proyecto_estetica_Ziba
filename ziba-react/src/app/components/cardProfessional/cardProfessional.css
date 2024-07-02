@@ -1,44 +1,56 @@
-.carousel-background{
-    background-image: url(../../../../public/imagenes/professionals/background-professionals.jpeg);
-    padding: 5%;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 100% 95%;
-    position: relative;
-    margin-top: 15%;
-}
+
 
 .title-carousel{
     display: flex;
     justify-content: center;
     align-items: center;
     padding-bottom: 2%;
-    color: #423155;
+    color: #594545;
+}
+
+.img-carousel{
+    margin: auto;
+    width: 60px !important;
+    height: 60px !important;
+    display: flex;
+    justify-content: center;
+}
+
+.square-carousel{
+    background-color: #f4f3ed;
+    height: 150px;
+    width: 255px;
+    margin-top: 10px;
+    padding: 5px;
+    box-shadow: 2px 2px 2px 2px #b89898 ;
 }
 
 .cards-carousel{
     display: flex;
     justify-content: center;
-    margin-bottom: 35%;
+ 
+    margin-top: 70px;
 }
 
 .card-container{
     padding: 1%;
     margin-top: 2%;
+    
 }
 
 .container-button-reservation{
-   margin-left: 32.5%;
-   position: absolute;
-   padding-top: 31%;
+   margin-left: 38%;
+   margin-top: 10px;
+   
+   
 }
 .button-reservation{
-    background-color: #987a9d;
+    background-color: #815b5b;
     width:340px ;
     height: 45px;
     color: white;
     font-size: 20px;
-    border-color: #987a9d;
+    border-color: #815b5b;
     border-bottom:none ;
     border-right: none;
 }
@@ -46,31 +58,35 @@
 
 .card-content{
     width: 18rem;
+    border-radius: 0%  !important;
+    border-color: #594545 !important;
+    
 }
 
 .title-card{
     text-align: center;
     text-transform: uppercase;
-    color: #423155;
+    color: #594545;
     
 }
 
 .title-text{
     text-align: center;
-    color: #423155;
+    color: #594545;
 }
 
 
 
 .carousel-control-prev-icon {
-    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23423155' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E") !important;
-    margin-bottom:200%;
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23594545' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E") !important;
+    margin-top: 50%;
 
    }
 
    .carousel-control-next-icon {
-     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23423155' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E") !important;
-    margin-bottom:200%;
+     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23594545' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E") !important;
+     margin-top: 50%;
+
 }
 
 

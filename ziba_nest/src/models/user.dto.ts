@@ -15,6 +15,9 @@ class User {
   @IsString()
   name: string;
 
+  @IsString()
+  lastname: string;
+
   @IsInt()
   dni: number;
 

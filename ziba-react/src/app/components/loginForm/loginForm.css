@@ -9,7 +9,7 @@ body{
     max-width: 1200px;
     background-color: #fff;
     display:flex ;
-    box-shadow: 5px 5px 5px #ad9a9a;
+    box-shadow: 5px 5px 5px #9e7676;
   }
   
   .form-login{
@@ -39,27 +39,41 @@ body{
     background-color: var(--bs-body-bg);
     background-clip: padding-box;
     border: var(--bs-border-width) solid var(--bs-border-color);
-    transition: border-color .15s ease-in-out, box-shadow #AD9A9A .15s ease-in-out;
+    transition: border-color .15s ease-in-out;
+    box-shadow: 2px 2px  #594545;
+  }
+
+  .form-input-login:focus {
+    border-color: #594545 !important;
+    outline: none !important;
+  }
+
+  .form-input-login::-ms-reveal,
+  .form-input-login::-ms-clear {
+    display: none;
   }
 
   .title-login{
     display: flex;
     flex-direction: column;
     text-align: center;
-    color: #31123C;
+    color: #594545;
     font-size: 20px;
     margin-top: 25px;
   }
   
   .form-label-login{
-    color: #31123C;
+    color: #594545;
     margin-bottom: 2px;
     padding: 5px;
+    
   }
 
   .input-login{
     width: 100%;
+    
   }
+
   
   .image-login{
     background-image: url('../../../../public/imagenes/image-auth.jpg');
@@ -67,6 +81,7 @@ body{
     background-size: cover;
     flex: 0 0 calc(60%);
     margin-top: 5px;
+   
   }
 
   .password-input-login{
@@ -84,9 +99,9 @@ body{
   }
 
   .button-login{
-    background-color: #987a9d;
+    background-color: #9e7676;
     margin-top: 15px;
-    width:335px ;
+    width:100% ;
     color: white;
 
   }
@@ -106,7 +121,7 @@ body{
   }
   
   .a-registrate{
-    color: #31123C;
+    color: #594545;
   }
   .img-logoziba-small-login{
     margin-left:55px ;

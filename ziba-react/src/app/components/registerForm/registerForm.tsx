@@ -31,12 +31,11 @@ export const RegisterForm: React.FC<registerProps> = ({ onSwitchToLogin }) => {
     const { register, handleSubmit, formState: { errors, isValid }, watch } = useForm<datos>({ mode: 'onChange' });
 
     const onSubmit: SubmitHandler<datos> = async (datos) => {
-
-        console.log(datos);
         const user = {
             mail: datos.email,
             password: datos.password,
-            name: `${datos.name} ${datos.lastname}`,
+            name: datos.name,
+            lastname:datos.lastname,
             dni: datos.dni,
             phone: datos.phone,
             role: 'client'
@@ -47,8 +46,8 @@ export const RegisterForm: React.FC<registerProps> = ({ onSwitchToLogin }) => {
            setErrorRegister('El mail indicado ya se encuentra registrado.')
         } else {
             Swal.fire({
-            title: "Bienvenido",
-            text: "Ya puedes empezar a disfrutar de nuestros servicios!",
+            title: `Hola ${datos.name}!`,
+            text: "Ya podes empezar a disfrutar de nuestros servicios!",
             icon: "success"
             });
             onSwitchToLogin();
@@ -84,7 +83,7 @@ export const RegisterForm: React.FC<registerProps> = ({ onSwitchToLogin }) => {
                     <h3 className="title-register">Crea una cuenta</h3>
                     <form onSubmit={handleSubmit(onSubmit)} className="form">
                         <div className="fields-name-and-lastname">
-                            <div>
+                            <div className="field-name">
                                 <label className='form-label-register'>Nombre</label>
                                 <input className='form-input-register'
                                     placeholder="Ingrese su nombre"
@@ -180,7 +179,7 @@ export const RegisterForm: React.FC<registerProps> = ({ onSwitchToLogin }) => {
                             <small className='text-validation-register'>{errors.phone?.message}</small>
                         </div>
                         <div className="fields-passwords">
-                            <div>
+                            <div className="field-password">
                                 <label className='form-label-register'>Contraseña</label>
                                 <div className="password-input-register">
                                     <input className='form-input-register'

@@ -2,9 +2,11 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { login } from "@/app/services/Login";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import "./loginForm.css";
 import { useRouter } from 'next/navigation';
+import { getInfoUser } from "@/app/services/User";
+import { UserContext } from "@/app/context/user.context";
 
 interface data {
     username: string,
@@ -17,9 +19,9 @@ interface loginFormProps {
 
 export const LoginForm: React.FC<loginFormProps> = ({ onSwitchToRegister }) => {
     const [showPassword, setShowPassword] = useState(false);
-    const jwt = require("jsonwebtoken");
     const { register, handleSubmit, watch,setError, formState: { errors, isValid }} = useForm<data>({ mode: "onChange" });
     const router = useRouter();
+    const { setUserData } = useContext(UserContext);
 
     const roleRouter = (role:string) => {
         //dependiendo del rol del usuario redirecciona a la pag correspondiente
@@ -36,14 +38,17 @@ export const LoginForm: React.FC<loginFormProps> = ({ onSwitchToRegister }) => {
         const resp = await login(data);
 
         //Si hay un error de usuario no autorizado o usuario inexistente, muestra mensaje en pantalla
-        if (resp == 401 || resp == 403) {
+        if (resp == 401) {
             setError("password", {
                 type: "manual",
                 message: 'El mail o contraseña no son correctos.',
               })
         } else {
             //Si el login es exitoso llama a la funcion roleRouter mandandole como parametro el rol del usuario logeado.
-            roleRouter(jwt.decode(resp.accessToken).usuario.role)
+            const user = await getInfoUser();
+            //Guardo la info del usuario en el contexto
+            setUserData(user);
+            roleRouter(user.role);
         }
     };
     const passwordValue = watch("password", "");
@@ -51,9 +56,9 @@ export const LoginForm: React.FC<loginFormProps> = ({ onSwitchToRegister }) => {
     return (
         <>
             <div className='container-form-login '>
-                <div className="image-login"></div>
+                <div className="image-login d-flex justify-content align-items"></div>
                 <div className='form-login'>
-                    <img src="/imagenes/logoziba-small.png" alt="" className="img-logoziba-small-login" onClick={() => router.push('/home')} />
+                    <img src="/imagenes/logoziba-small.png" alt="" className="img-logoziba-small-login d-flex justify-content align-items" onClick={() => router.push('/home')} />
                     <h3 className="title-login">Iniciar sesión</h3>
                     <form onSubmit={handleSubmit(onSubmit)} className="login-form">
                         <div>

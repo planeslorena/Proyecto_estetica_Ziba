@@ -1,7 +1,8 @@
 .navbar{
     background-color: white;
     padding: 0px !important;
-    margin: 0px !important;
+    margin-top: 1rem !important;
+    
 
 }
 
@@ -11,32 +12,30 @@
 
 .menu{
     margin-left: 10%;
-    width: 100vw;
-    height: 55px;
+    width: 80%;
+    
     display: flex;
     justify-content: center;
     align-content: center; 
+    
 }
 
 .links{
-    padding: 7px 13px;
+    /*padding: 7px 13px;*/
     text-decoration: none;
     font-size: 18px;
-    justify-content: center;
-    align-content: center; 
-    display: block;
-    color: #423155;
+    display: flex;
+    align-items: center !important;
+    color: #594545;
     transition: .3;
 }
 
 .cuenta{
-    padding: 7px 13px;
+    /*padding: 7px 13px;*/
     text-decoration: none;
     font-size: 18px;
-    justify-content: center;
-    align-content: center; 
-    display: block;
-    color: #423155;
+    align-items: center !important;
+    color: #594545;
     transition: .3;
 }
 
@@ -46,11 +45,31 @@
 }
 
 .links:hover{
-    border-bottom: .5px solid #423155;
-    color: #a9a2b1 ;
+    border-bottom: .5px solid #594545;
+    color: #b89898 ;
 }
 
-@media screen and (max-width: 376px){
+.bi{
+    color:#594545;
+    font-size: 30px;
+
+}
+
+.dropdown-toggle::after {
+    display: none !important; 
+  }
+
+  .btn-check:checked+.btn, .btn.active, .btn.show, .btn:first-child:active, :not(.btn-check)+.btn:active, .btn {
+    color: #000 !important;
+    background-color: transparent !important;
+    border-color: transparent !important;
+  }
+
+  .dropdown-menu{
+    border-radius: 0px !important;
+  }
+
+/*@media screen and (max-width: 376px){
     .menu{
         display: flex;
         justify-content: center;
@@ -76,4 +95,4 @@
         padding: 0 10px;
         font-size: 16px;
     }
-}
+}*/
