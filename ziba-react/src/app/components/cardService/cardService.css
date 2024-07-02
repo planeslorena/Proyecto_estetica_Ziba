@@ -30,6 +30,7 @@
 .title-secondary{
     background-color: #9e7676;
     height: 50px;
+    margin-bottom: 0 !important;
 }
 
 .p-title{
