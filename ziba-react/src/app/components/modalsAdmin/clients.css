@@ -1,0 +1,41 @@
+
+
+.button-agregarcliente{
+    background-color: #594545;
+    color:white ;
+    width: 100%;
+   margin-top: 10px;
+
+}
+
+.form-input-admin{
+    display: block;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--bs-body-color);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    transition: border-color .15s ease-in-out;
+    
+}
+
+
+.form-input-admin:focus {
+    border-color: #594545 !important;
+    outline: none !important;
+}
+
+.form-label-admin{
+    width: 100%;
+}
+
+.text-validation-admin{    
+    color:red;
+}

@@ -10,6 +10,7 @@ create table if not exists users (
 	lastname varchar(100) not null,
 	dni int not null,
 	phone bigint not null,
+	/*role: admin, client, prof*/
 	role varchar(10) not null,
 	active bit not null, 
 	primary key (id_user),
@@ -35,19 +36,34 @@ create table if not exists services (
 	id_service int not null auto_increment,
 	name varchar(100) not null,
 	id_speciality int not null,
-	description varchar(500) not null,
-	benefits varchar(200),
+	description varchar(1000) not null,
 	price float,
+	duration int,
 	active bit not null,
 	primary key (id_service),
 	constraint FK_service_specialties foreign key (id_speciality) references specialties(id_speciality)
 );
 
-create table if not exists professional_service(
-	id_prof_service int not null auto_increment,
+create table if not exists calendar (
+	id_calendar int not null auto_increment,
 	id_professional int not null,
+	week_day varchar(10) not null,
+	hour_begin time not null ,
+	hour_end time not null,
+	primary key (id_calendar),
+	constraint FK_calendar_services foreign key (id_professional) references professional(id_professional),
+	constraint UK_professional_day unique key (id_professional,week_day)
+);
+
+create table if not exists appointments (
+	id_appointments int not null auto_increment,
+	date date not null,
+	hour time not null,
+	id_user int not null ,
 	id_service int not null,
-	primary key (id_prof_service),
-	constraint FK_professional foreign key (id_professional) references professional(id_professional),
-	constraint FK_service foreign key (id_service) references services(id_service)
+	/*0-reservado 1-atendido*/
+	state bit not null,
+	primary key (id_appointments),
+	constraint FK_appointments_services foreign key (id_service) references services(id_service),
+	constraint FK_appointments_user foreign key (id_user) references users(id_user)
 );

@@ -1,0 +1,75 @@
+.table-admin-container{
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    border: 2px solid #9E7676;
+}
+
+.table-admin-thead{
+    background: #9E7676;
+    color: white;
+
+}
+
+.table-admin-th{
+    text-align: left;
+    padding: 16px;
+}
+
+.table-admin-td{
+    text-align: left;
+    padding: 16px;
+}
+
+tr:nth-child(even) {
+    background: #F4F3ED;
+
+}
+
+
+.inputbuscador-admin{
+   margin-bottom: 10px;
+    border: solid 2px #9E7676;
+}
+
+.inputbuscador-admin:focus {
+    border-color: #594545 !important;
+    outline: none !important;
+}
+
+.button-agregar{
+    margin-bottom: 10px;
+    border: solid 2px #9E7676;
+    background: #9E7676;
+    color: white;
+    
+}
+
+.icon-double-arrow{
+    padding-left: 7px;
+    font-size: 20px !important;
+}
+
+.icon-down{
+    padding-left: 7px;
+    font-size: 20px !important;
+}
+
+.icon-up{
+    padding-left: 7px;
+    font-size: 20px !important;
+}
+
+.body-ajustes{
+    text-align: center;  
+    padding: 16px;
+}
+
+.icon-pencil{
+    font-size: 24px !important;
+
+}
+
+.icon-trash{
+    font-size: 24px !important;
+}

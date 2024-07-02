@@ -55,15 +55,15 @@
 
 }
 
-.dropdown-toggle::after {
+.dropdown-account::after {
     display: none !important; 
   }
 
-  .btn-check:checked+.btn, .btn.active, .btn.show, .btn:first-child:active, :not(.btn-check)+.btn:active, .btn {
+ .btn-check:checked+.btn, .btn.active, .btn.show, .btn:first-child:active, :not(.btn-check)+.btn:active, .btn {
     color: #000 !important;
     background-color: transparent !important;
     border-color: transparent !important;
-  }
+  } 
 
   .dropdown-menu{
     border-radius: 0px !important;

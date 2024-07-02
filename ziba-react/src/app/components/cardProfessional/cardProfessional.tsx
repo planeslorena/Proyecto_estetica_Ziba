@@ -7,7 +7,7 @@ import { getInfoServices } from '@/app/services/Services';
 
 export function CardProfessional() {
   const [index, setIndex] = useState(0);
-  const [imgs, setImgs] = useState([{ specility: '', professional: '', services: [''] }]);
+  const [imgs, setImgs] = useState([{ speciality: 'loading', professional: '', services: [''] }]);
 
   const getServices = async () => {
     const imgs2 = await getInfoServices();
