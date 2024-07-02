@@ -40,7 +40,7 @@ export const CardService: React.FC<cardServiceProps> = ({ speciality }) => {
     const [format, setFormat] = useState<string>('');
     const [selectedService, setSelectedService] = useState<string>('');
     const [selectedDescription, setSelectedDescription] = useState<string>('');
-    const { register, handleSubmit, formState: { errors, isValid }, control, watch } = useForm<data>();
+    const { register, handleSubmit, formState: { errors, isValid }, control } = useForm<data>();
     const onSubmit: SubmitHandler<data> = (data) => {
         console.log(data);
     }
@@ -62,7 +62,7 @@ export const CardService: React.FC<cardServiceProps> = ({ speciality }) => {
     const isDateDisabled = (date: Date): boolean => {
         const day = date.getDay();
         const isSunday = day === 0;
-        return isSunday || date < now || date >= endDate;
+        return isSunday || date < now || date >= endDate || !selectedService;
     };
 
     useEffect(() => {
@@ -93,7 +93,7 @@ export const CardService: React.FC<cardServiceProps> = ({ speciality }) => {
                 
                 <form onSubmit={handleSubmit(onSubmit)} className="d-flex flex-column justify-content-evenly form-service ">
                     <div>
-                        <Card.Title className="title-primary d-flex  align-items-center">
+                        <Card.Title className="title-primary d-flex justify-content-evenly align-items-center">
                             <p className="p-title p-service">{speciality.img.toUpperCase()}</p>
                             <p className="p-title p-prof">Prof.{speciality.prof}</p>
                         </Card.Title>
