@@ -97,28 +97,24 @@ export const CardService: React.FC<cardServiceProps> = ({ speciality }) => {
                             <p className="p-title p-service">{speciality.img.toUpperCase()}</p>
                             <p className="p-title p-prof">Prof.{speciality.prof}</p>
                         </Card.Title>
-                        <Card.Title className="d-flex justify-content-evenly title-secondary align-items-center">
-                            <Controller
-                                name="service"
-                                control={control}
-                                rules={{ required: 'Por favor seleccione un servicio' }}
-                                render={({field}) => (
-                                    <select {...field}  onChange={(e) => {
+                        <Card.Title className="d-flex justify-content-evenly title-secondary align-items-center">     
+                                    <select 
+                                    {...register('service', {
+                                        required: 'Por favor seleccione un servicio'
+                                    })}  
+                                    onChange={(e) => {
                                         const selectedServiceId = parseInt(e.target.value, 10);
                                         const selectedService = speciality.services.find((service: any) => service.id === selectedServiceId);
                                         if (selectedService) {
                                             setSelectedService(selectedService.name);
                                             setSelectedDescription(selectedService.desc);
                                         }
-                                        field.onChange(e);
                                     }} className="select-service">
                                     <option value="" selected disabled hidden>Servicio</option>
                                     {speciality.services.map((service: any) => (
                                         <option key={service.id} value={service.id}>{service.name}</option>
                                     ))}
                                     </select>
-                                )}
-                                />
                             <small>{errors.service?.message}</small>                      
                             {selectedService ? (
                                 <p onClick={handleShow} className="p-title p-que-es">¿Que es?</p> ) : (
