@@ -93,9 +93,9 @@ export const CardService: React.FC<cardServiceProps> = ({ speciality }) => {
                 
                 <form onSubmit={handleSubmit(onSubmit)} className="d-flex flex-column justify-content-evenly form-service ">
                     <div>
-                        <Card.Title className="title-primary d-flex justify-content-evenly align-items-center">
+                        <Card.Title className="title-primary d-flex  align-items-center">
                             <p className="p-title p-service">{speciality.img.toUpperCase()}</p>
-                            <p className="p-title">Prof.{speciality.prof}</p>
+                            <p className="p-title p-prof">Prof.{speciality.prof}</p>
                         </Card.Title>
                         <Card.Title className="d-flex justify-content-evenly title-secondary align-items-center">
                             <Controller
@@ -111,7 +111,7 @@ export const CardService: React.FC<cardServiceProps> = ({ speciality }) => {
                                             setSelectedDescription(selectedService.desc);
                                         }
                                         field.onChange(e);
-                                    }}>
+                                    }} className="select-service">
                                     <option value="" selected disabled hidden>Servicio</option>
                                     {speciality.services.map((service: any) => (
                                         <option key={service.id} value={service.id}>{service.name}</option>
@@ -121,8 +121,8 @@ export const CardService: React.FC<cardServiceProps> = ({ speciality }) => {
                                 />
                             <small>{errors.service?.message}</small>                      
                             {selectedService ? (
-                                <p onClick={handleShow} className="p-title">¿Que es?</p> ) : (
-                                    <p className="p-title">¿Que es?</p>
+                                <p onClick={handleShow} className="p-title p-que-es">¿Que es?</p> ) : (
+                                    <p className="p-title p-que-es">¿Que es?</p>
                                 )}                  
                             <DescriptionModal service={selectedService} desc={selectedDescription} show={show} handleClose={handleClose}></DescriptionModal>
                         </Card.Title>
