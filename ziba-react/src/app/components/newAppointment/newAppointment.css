@@ -1,8 +1,11 @@
 .client-appointment-button-container{
     width: auto;
     height: auto;
-    box-shadow: 0px 4px 4px 0px #594545;
-    padding: 3%;
+    box-shadow: 0px 0px 5px 1px #594545;
+    padding: 3%;    
+    /*border:  1px solid #594545;*/
+
+
 }
 
 .client-appointment-button{
@@ -11,7 +14,7 @@
     border: none;
     height: 3rem;
     width: 15rem;
-    box-shadow: 0px 4px 4px 0px #594545;
+    
 }
 
 .client-appointment-text{

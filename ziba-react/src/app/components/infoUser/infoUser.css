@@ -2,13 +2,13 @@
 .info-user-container{
     width: 35rem;
     height: fit-content;
-    box-shadow: 0px 4px 4px 0px #594545;
+    box-shadow: 0px 0px 5px 1px #594545;
     display: flex;
     flex-direction: column;
 }
 
 .info-user{
-    margin: 3%;
+   
     padding-top: 2%;
     
 }

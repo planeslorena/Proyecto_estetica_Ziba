@@ -29,6 +29,8 @@ export const LoginForm: React.FC<loginFormProps> = ({ onSwitchToRegister }) => {
             router.push('/admin')
         } else if (role === 'client') {
             router.push('/client')
+        }else if(role === 'prof') {
+                router.push('/professional')
         }
     }
 
