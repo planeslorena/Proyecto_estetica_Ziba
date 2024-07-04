@@ -1,9 +1,11 @@
+import { useContext } from 'react';
 import './infoUser.css'
-
-const usuario = [
-    { nombre: 'Lorena', apellido: 'Planes', dni: '39521567', telefono: '2284563215', email: 'planeslorena@gmail.com' }];
+import { UserContext } from '@/app/context/user.context';
 
 export const InfoUser = () => {
+
+    const { userData } = useContext(UserContext);
+
     return (
        <div className="info-user-container">   
            <div className='info-user'>
@@ -11,32 +13,28 @@ export const InfoUser = () => {
                    <h4>MI PERFIL</h4>
                    <i className='img-info-perfil bi-person-circle'/>
                </div>
-               {usuario.map((item: any) => {
-                   return (
-                       <ul key={item} className="info-list">
+                       <ul className="info-list">
                            <li className='item-list'>
                                <h5 className='item-list-title'>Nombre</h5>
-                               <p>{item.nombre}</p>
+                               <p>{userData?.name}</p>
                            </li>
                            <li className='item-list'>
                                <h5 className='item-list-title'>Apellido</h5>
-                               <p>{item.apellido}</p>
+                               <p>{userData?.lastname}</p>
                            </li>
                            <li className='item-list'>
                                <h5 className='item-list-title'>DNI</h5>
-                               <p>{item.dni}</p>
+                               <p>{userData?.dni}</p>
                            </li>
                            <li className='item-list'>
                                <h5 className='item-list-title'>Teléfono</h5>
-                               <p>{item.telefono}</p>
+                               <p>{userData?.phone}</p>
                            </li>
                            <li className='item-list'>
                                <h5 className='item-list-title'>Email</h5>
-                               <p>{item.email}</p>
+                               <p>{userData?.username}</p>
                            </li>
                        </ul>
-                   );
-               })}
            </div>
        </div>
     )

@@ -28,6 +28,20 @@ const servicesQueries = {
                             on a.id_user = u.id_user 
                             and a.id_service = s.id_service 
                             where date > sysdate();`,
+    selectAppointmentsbyClient:`select a.id_appointment, date,hour,s.name service, sp.name speciality, u2.name, u2.lastname 
+                                from appointments a 
+                                join users u 
+                                join services s 
+                                join specialties sp
+                                join professional p 
+                                join users u2
+                                on a.id_user = u.id_user 
+                                and a.id_service = s.id_service
+                                and s.id_speciality = sp.id_speciality 
+                                and p.id_speciality = sp.id_speciality 
+                                and p.id_user = u2.id_user
+                                where u.id_user = ?
+                                and date >= sysdate();`,
     selectSpecialtiesWhitoutProf:`select s.id_speciality, s.name
                             from specialties s 
                             left join (select p.* from professional p inner join users u on p.id_user = u.id_user where u.active = 1) p

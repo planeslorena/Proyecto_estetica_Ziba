@@ -17,6 +17,11 @@ export const getAllAppointments = async (): Promise<any> => {
   return response.data;
 }
 
+export const getAppointmentsByClient = async (id_user:any): Promise<any> => {
+  const response: AxiosResponse<any, any> = await clientAxios.get('services/appointments/'+id_user);
+  return response.data;
+}
+
 export const getSpecialtiesWhitoutProf = async (): Promise<any> => {
   const response: AxiosResponse<any, any> = await clientAxios.get('services/specialties');
   return response.data;

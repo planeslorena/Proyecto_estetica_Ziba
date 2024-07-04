@@ -13,7 +13,7 @@ function ClientPage() {
     <>
       <header>
         <div>
-            <Menu></Menu>
+          <Menu></Menu>
         </div>
 
       </header>
@@ -38,4 +38,4 @@ function ClientPage() {
 }
 
 
-export default withRoles(ClientPage,'client', '/home');
+export default withRoles(ClientPage, 'client', '/home');

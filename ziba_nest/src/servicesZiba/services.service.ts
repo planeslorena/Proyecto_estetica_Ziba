@@ -9,16 +9,16 @@ import Services from 'src/models/services.dto';
 export class ServicesService {
     constructor(private dbService: DatabaseService) {
     }
-
+    
     //Funcion que obtiene todos los servicios brindados por la estetica agrupados por especialidad
     async getAll(): Promise<Services[]> {
-
+        
         //Primero se obtienen las especialidades
         const resultQuery: RowDataPacket[] = await this.dbService.executeSelect(
             servicesQueries.selectAllSpecialties,
             [],
         );
-
+        
         let resultServices: Services[] = resultQuery.map((rs: RowDataPacket) => {
             return {
                 speciality: rs['speciality'],
@@ -26,13 +26,13 @@ export class ServicesService {
                 services: []
             };
         });
-
+        
         //luego obtengo los servicios para cada especilidad
         const resultQuery2: RowDataPacket[] = await this.dbService.executeSelect(
             servicesQueries.selectAllServices,
             [],
         );
-
+        
         resultQuery2.map((rs: RowDataPacket) => {
             resultServices.map((se) => {
                 if (rs['speciality'] == se.speciality) {
@@ -41,19 +41,19 @@ export class ServicesService {
                 return resultServices
             })
         });
-
+        
         return resultServices;
     }
-
+    
     //Funcion que obtiene todos los servicios brindados por la estetica con especialidad, profesional y horarios
     async getAllForAdmin(): Promise<any[]> {
-
+        
         //Primero se obtengo los servicio con especialidad y profesional
         const resultQuery: RowDataPacket[] = await this.dbService.executeSelect(
             servicesQueries.selectServiceWithSpeciality,
             [],
         );
-
+        
         let resultServices: any[] = resultQuery.map((rs: RowDataPacket) => {
             return {
                 id: rs['id_service'],
@@ -64,18 +64,18 @@ export class ServicesService {
                 price: rs['price'],
             };
         });
-
+        
         return resultServices;
     }
-
+    
     //Funcion que obtiene todos los turnos reservados de hoy en adelante
     async getAllApponintments(): Promise<any[]> {
-
+        
         const resultQuery: RowDataPacket[] = await this.dbService.executeSelect(
             servicesQueries.selectAllAppointments,
             [],
         );
-
+        
         let resultApponitments: any[] = resultQuery.map((rs: RowDataPacket) => {
             return {
                 id: rs['id_appointment'],
@@ -87,6 +87,27 @@ export class ServicesService {
         });
         return resultApponitments;
     }
+    
+    //Funcion que obtiene los turnos de un determinado cliente
+    async getAClientAppointments(id_user: number): Promise<any[]> {
+        const resultQuery: RowDataPacket[] = await this.dbService.executeSelect(
+            servicesQueries.selectAppointmentsbyClient,
+            [id_user],
+        );
+        
+        let resultAppointments: any[] = resultQuery.map((rs: RowDataPacket) => {
+            return {
+                id: rs['id_appointment'],
+                date: `${rs['date'].getDate()}-${rs['date'].getMonth()+1}-${rs['date'].getFullYear()}`,
+                hour: rs['hour'],
+                service: rs['service'],
+                speciality: rs['speciality'],
+                professional: `${rs['name']} ${rs['lastname']}`,
+            };
+        });
+        return resultAppointments;
+    }
+
 
     //Función que obtiene las especialidades que no tienen un profesional asignado
     async getSpecialtiesWhitoutProf(): Promise<any[]> {

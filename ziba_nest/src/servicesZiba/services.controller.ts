@@ -39,6 +39,13 @@ export class ServicesController {
     return this.servicesService.getAllSpecialtiesWithProf();
   }
 
+  //OBTENER LOS TURNOS DE UN CLIENTE
+  @UseGuards(JwtMiddlewareGuard)
+  @Get('/appointments/:id_user')
+  async getAClientAppointments(@Param('id_user', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST, }),) id_user: number) {
+    return this.servicesService.getAClientAppointments(id_user);
+  }
+
   //CREAR SERVICIO
   @UseGuards(JwtMiddlewareGuard)
   @Post()

@@ -27,7 +27,11 @@ export class LoginService {
       username: resultQuery[0].email,
       password: resultQuery[0].password,
       role: resultQuery[0].role,
-      name: resultQuery[0].name
+      name: resultQuery[0].name,
+      lastname: resultQuery[0].lastname,
+      dni: resultQuery[0].dni,
+      phone: resultQuery[0].phone,
+      id: resultQuery[0].id_user,
     };
 
     //Si lo encuentra debo chequear que la contraseña sea la misma
@@ -37,6 +41,10 @@ export class LoginService {
         username: username,
         role: user.role,
         name: user.name,
+        lastname: user.lastname,
+        dni: user.dni,
+        phone: user.phone,
+        id: user.id
       };
     } else {
       //Si la contraseña es incorrecta retorno el error

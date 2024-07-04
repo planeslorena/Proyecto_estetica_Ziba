@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './appointmentList.css'
 import { Card, CloseButton, Dropdown, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import Swal from 'sweetalert2';
+import { UserContext } from '@/app/context/user.context';
+import { getAppointmentsByClient } from '@/app/services/Services';
 
-const cardsData = [{
+
+/*const cardsData = [{
   profesion: 'depiladora',
   servicio: 'Depilación',
   nombre: 'Prof. Romina Benegas',
@@ -42,12 +45,24 @@ const cardsData = [{
   especialidad: 'Esculpidas',
   dia: '2024/07/30',
   horario: '18:00',
-}];
+}];*/
 
 export const AppointmentList = () => {
   const [filter, setFilter] = useState('Año');
+  const [cardsData, setCardsData] = useState<any[]>([])
   const [filteredCards, setFilteredCards] = useState<typeof cardsData>(cardsData);
+  const { userData } = useContext(UserContext);
 
+  const loadAppointments = async () => {
+      const id_user = userData?.id;
+      const  newCardsData = await getAppointmentsByClient(id_user);
+      setCardsData(newCardsData);
+      setFilteredCards(newCardsData);
+  }
+
+  useEffect(() => {
+    loadAppointments();
+  }, []);
 
   useEffect(() => {
     filterCards(filter);
@@ -136,27 +151,27 @@ export const AppointmentList = () => {
             <div key={`${card.nombre}-${card.dia}-${card.horario}`} className='appointment-cards-container'>
               <Card className='appointment-cards'>
                 <div className='card-container'>
-                  <img className='img-appointment-card' src={`imagenes/professionals/${card.profesion}.png`} />
+                  <img className='img-appointment-card' src={`imagenes/professionals/${card.professional}.png`} />
                   <Card.Body>
                     <div>
-                      <Card.Title>{card.servicio}</Card.Title>
+                      <Card.Title>{card.speciality}</Card.Title>
 
                     </div>
                     <div className='d-flex  justify-content-between container-info '>
                       <div className='service-text'>
                         <Card.Text className='prof-text'>
-                          {card.nombre}
+                          {card.professional}
                         </Card.Text>
                         <Card.Text>
-                          Servicio: {' '}{card.especialidad}
+                          Servicio: {' '}{card.service}
                         </Card.Text>
                       </div>
                       <div className='d-flex flex-column  justify-content-around container-day-hour'>
                         <Card.Text className='day-text'>
-                          Día:{' '}{new Date(card.dia).getDate()}{'/'}{new Date(card.dia).getMonth() + 1}{'/'}{new Date(card.dia).getFullYear()}
+                          Día:{' '} {card.day}{/*new Date(card.dia).getDate()}{'/'}{new Date(card.dia).getMonth() + 1}{'/'}{new Date(card.dia).getFullYear()*/}
                         </Card.Text>
                         <Card.Text className='time-text'>
-                          Hora:{' '}{card.horario}hs
+                          Hora:{' '}{card.hour}hs
                         </Card.Text>
                       </div>
                     </div>
