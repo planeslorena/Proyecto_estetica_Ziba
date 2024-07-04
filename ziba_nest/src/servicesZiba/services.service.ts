@@ -98,7 +98,7 @@ export class ServicesService {
         let resultAppointments: any[] = resultQuery.map((rs: RowDataPacket) => {
             return {
                 id: rs['id_appointment'],
-                date: `${rs['date'].getDate()}-${rs['date'].getMonth()+1}-${rs['date'].getFullYear()}`,
+                date: rs['date'],
                 hour: rs['hour'],
                 service: rs['service'],
                 speciality: rs['speciality'],

@@ -3,74 +3,23 @@ import './appointmentList.css'
 import { Card, CloseButton, Dropdown, ListGroup, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import Swal from 'sweetalert2';
 import { UserContext } from '@/app/context/user.context';
-import { getAppointmentsByClient } from '@/app/services/Services';
-
-
-/*const cardsData = [{
-  profesion: 'depiladora',
-  servicio: 'Depilación',
-  nombre: 'Prof. Romina Benegas',
-  especialidad: 'Depilación brasileña',
-  dia: '2024/07/28',
-  horario: '20:00',
-},
-{
-  profesion: 'cosmetóloga',
-  servicio: 'Cosmetología',
-  nombre: 'Prof. Marisa Ruiz',
-  especialidad: 'Peeling',
-  dia: '2024/06/29',
-  horario: '15:00',
-},
-{
-  profesion: 'cosmetóloga',
-  servicio: 'Cosmetología',
-  nombre: 'Prof. Marisa Ruiz',
-  especialidad: 'Limpieza Facial',
-  dia: '2024/07/05',
-  horario: '16:00',
-},
-{
-  profesion: 'masajista',
-  servicio: 'Masoterapia',
-  nombre: 'Prof. Naomi Almeida',
-  especialidad: 'Masaje cuerpo entero',
-  dia: '2024/06/14',
-  horario: '17:00',
-},
-{
-  profesion: 'manicura',
-  servicio: 'Manicuría',
-  nombre: 'Prof. Maiten Suarez',
-  especialidad: 'Esculpidas',
-  dia: '2024/07/30',
-  horario: '18:00',
-}];*/
 
 interface listProps {
   data: any;
 }
 
-export const AppointmentList = () => {
+export const AppointmentList: React.FC<listProps> = ({ data }) => {
   const [filter, setFilter] = useState('Año');
-  const [cardsData, setCardsData] = useState<any[]>([])
   const [filteredCards, setFilteredCards] = useState<typeof data>(data);
   const { userData } = useContext(UserContext);
-
-  const loadAppointments = async () => {
-      const id_user = userData?.id;
-      const  newCardsData = await getAppointmentsByClient(id_user);
-      setCardsData(newCardsData);
-      setFilteredCards(newCardsData);
-  }
-
-  useEffect(() => {
-    loadAppointments();
-  }, []);
 
   useEffect(() => {
     filterCards(filter);
   }, [filter]);
+
+  useEffect(() => {
+    setFilteredCards(data);
+  }, [data]);
 
   const filterCards = (filter: any) => {
     const now = new Date();
@@ -79,7 +28,7 @@ export const AppointmentList = () => {
     switch (filter) {
       case 'Día':
         filtered = data.filter((card: any) => {
-          const cardDate = new Date(card.dia);
+          const cardDate = new Date(card.date);
           return cardDate.toDateString() === now.toDateString();
         });
         break;
@@ -87,7 +36,7 @@ export const AppointmentList = () => {
         const endOfWeek = new Date(now);
         endOfWeek.setDate(now.getDate() + 6);
         filtered = data.filter((card: any) => {
-          const cardDate = new Date(card.dia);
+          const cardDate = new Date(card.date);
           return cardDate >= now && cardDate <= endOfWeek;
         });
         break;
@@ -95,7 +44,7 @@ export const AppointmentList = () => {
         const startOfMonth = new Date(now.getFullYear(), now.getMonth(), now.getDate());
         const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
         filtered = data.filter((card: any) => {
-          const cardDate = new Date(card.dia);
+          const cardDate = new Date(card.date);
           return cardDate >= startOfMonth && cardDate <= endOfMonth;
         });
         break;
@@ -103,7 +52,7 @@ export const AppointmentList = () => {
         const startOfYear = new Date(now.getFullYear(), now.getMonth(), now.getDate());
         const endOfYear = new Date(now.getFullYear(), 11, 31);
         filtered = data.filter((card: any) => {
-          const cardDate = new Date(card.dia);
+          const cardDate = new Date(card.date);
           return cardDate >= startOfYear && cardDate <= endOfYear;
         });
         break;
@@ -174,55 +123,61 @@ export const AppointmentList = () => {
       <div className='scroller-container'>
         {filteredCards.map((card: any) => {
           return (
-            <div key={`${card.nombre}-${card.dia}-${card.horario}`} className='appointment-cards-container'>
+            <div key={`${card.professionals}-${card.date}-${card.hour}`} className='appointment-cards-container'>
               <Card className='appointment-cards'>
                 <div className='card-container'>
-                  <img className='img-appointment-card' src={`imagenes/professionals/${card.professional}.png`} />
+                {userData?.role == 'client' ?
+                    <img className='img-appointment-card' src={`imagenes/professionals/${card.speciality}.jpg`} />:
+                    <img className='img-appointment-card' src={`imagenes/professionals/${card.speciality}.png`} />
+                }
                   <Card.Body>
                     <div>
-                      <Card.Title>{card.servicio || card.service}</Card.Title>
-
+                      {userData?.role == 'client' ?
+                        <Card.Title>{card.speciality}</Card.Title> :
+                        <Card.Title>{card.service}</Card.Title>
+                      }
                     </div>
                     <div className='d-flex  justify-content-between container-info '>
-                      <div className='service-text'>
-                        <Card.Text className='prof-text'>
-                          {card.professional}
-                        </Card.Text>
-                        <Card.Text>
-                          {card.especialidad ?
-                          `Servicio: ${' '}${card.especialidad}` :
-                          `Télefono: ${' '}${card.tel}`}
-                        </Card.Text>
-                      </div>
+                      {userData?.role == 'client' ?
+                        <div className='service-text'>
+                          <Card.Text className='prof-text'>Prof. {card.professional}</Card.Text>
+                          <Card.Text className='prof-text'>Servicio: {card.service}</Card.Text>
+                        </div>
+                        :
+                        <div className='service-text'>
+                          <Card.Text className='prof-text'>Cliente: {card.client}</Card.Text>
+                          <Card.Text className='prof-text'>Télefono: {card.tel}</Card.Text>
+                        </div>
+                      }
                       <div className='d-flex flex-column  justify-content-around container-day-hour'>
                         <Card.Text className='day-text'>
-                          Día:{' '} {card.day}{/*new Date(card.dia).getDate()}{'/'}{new Date(card.dia).getMonth() + 1}{'/'}{new Date(card.dia).getFullYear()*/}
+                          Día:{' '} {new Date(card.date).getDate()}{'/'}{new Date(card.date).getMonth() + 1}{'/'}{new Date(card.date).getFullYear()}
                         </Card.Text>
                         <Card.Text className='time-text'>
-                          Hora:{' '}{card.hour}hs
+                          Hora:{' '}{card.hour.substring(0,5)}hs
                         </Card.Text>
                       </div>
-                    </div>          
-                     {data.nombre ?
-                  <OverlayTrigger
-                    key='bottom'
-                    placement='bottom'
-                    overlay={
-                      <Tooltip id='tooltip-bottom'>
-                        Cancelar turno
-                      </Tooltip>
+                    </div>
+                    {userData?.role == 'client' ?
+                      <OverlayTrigger
+                        key='bottom'
+                        placement='bottom'
+                        overlay={
+                          <Tooltip id='tooltip-bottom'>
+                            Cancelar turno
+                          </Tooltip>
+                        }
+                      >
+                        <CloseButton onClick={cancelAppointment} className='cancel-appointment-cross' aria-label="Hide" />
+                      </OverlayTrigger> :
+                      <div className='container-buttons-appointment'>
+                        <button onClick={checkAppointment} className='button-atendido-appointment'>Atendido</button>
+                        <button onClick={cancelAppointment} className='button-cancelar-appointment'>Cancelar turno</button>
+                      </div>
                     }
-                  >
-                    <CloseButton onClick={cancelAppointment} className='cancel-appointment-cross' aria-label="Hide" />
-                  </OverlayTrigger> :
-                  <div className='container-buttons-appointment'>
-                    <button onClick={checkAppointment} className='button-atendido-appointment'>Atendido</button>
-                    <button onClick={cancelAppointment} className='button-cancelar-appointment'>Cancelar turno</button>
-                  </div>
-}
 
                   </Card.Body>
-       
+
                 </div>
               </Card>
             </div>

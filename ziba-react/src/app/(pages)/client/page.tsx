@@ -6,50 +6,26 @@ import { InfoUser } from "@/app/components/infoUser/infoUser";
 import { Footer } from "@/app/components/footer/footer";
 import { NewAppointment } from "@/app/components/newAppointment/newAppointment";
 import './page.css'
-
-const cardsData = [{
-  profesion: 'depiladora',
-  servicio: 'Depilación',
-  nombre: 'Romina Benegas',
-  especialidad: 'Depilación brasileña',
-  dia: '2024/07/28',
-  horario: '20:00',
-},
-{
-  profesion: 'cosmetóloga',
-  servicio: 'Cosmetología',
-  nombre: 'Marisa Ruiz',
-  especialidad: 'Peeling',
-  dia: '2024/06/29',
-  horario: '15:00',
-},
-{
-  profesion: 'cosmetóloga',
-  servicio: 'Cosmetología',
-  nombre: 'Marisa Ruiz',
-  especialidad: 'Limpieza Facial',
-  dia: '2024/07/05',
-  horario: '16:00',
-},
-{
-  profesion: 'masajista',
-  servicio: 'Masoterapia',
-  nombre: 'Naomi Almeida',
-  especialidad: 'Masaje cuerpo entero',
-  dia: '2024/06/14',
-  horario: '17:00',
-},
-{
-  profesion: 'manicura',
-  servicio: 'Manicuría',
-  nombre: 'Maiten Suarez',
-  especialidad: 'Esculpidas',
-  dia: '2024/07/30',
-  horario: '18:00',
-}];
-
+import { useContext, useEffect, useState } from "react";
+import { getAppointmentsByClient } from "@/app/services/Services";
+import { UserContext } from "@/app/context/user.context";
 
 function ClientPage() {
+
+  const { userData } = useContext(UserContext);
+  const [cardsData, setCardsData] = useState([])
+
+  const loadAppointments = async () => {
+      const id_user = userData?.id;
+      const  newCardsData = await getAppointmentsByClient(id_user);
+      setCardsData(newCardsData);
+  }
+
+  useEffect(() => {
+    loadAppointments();
+  }, []);
+
+  
 
   return (
     <>
@@ -78,6 +54,5 @@ function ClientPage() {
     </>
   )
 }
-
 
 export default withRoles(ClientPage, 'client', '/home');
