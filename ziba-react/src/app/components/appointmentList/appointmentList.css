@@ -3,7 +3,7 @@
     width: 47rem;
     position: relative;
     box-shadow: 0px 0px 5px 1px #594545;
-    margin-left: 5%;
+    margin-right: 10%;
     
     
     
@@ -67,7 +67,26 @@
     padding: 1%;
 }
 
+.container-buttons-appointment{
+    text-align: center;
+    padding: 4%;
+    margin-top: 5%;
 
+}
+.button-atendido-appointment{
+    margin-right: 5px;
+    border: solid 1px #317435;
+    background-color: #578d5b;
+    color: #f4f3ed;
+    width: 150px;
+}
+
+.button-cancelar-appointment{
+    border: solid 1px #a74122;
+    background-color: #ad4537;
+    color: #f4f3ed;
+    width: 150px;
+}
 
 .card-body{
     padding: 2% !important;

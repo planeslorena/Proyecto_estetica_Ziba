@@ -21,8 +21,9 @@ export function Menu() {
       router.push('/client');
     } else if (userData?.role == 'admin') {
       router.push('/admin');
-    }
-  }
+    }else if (userData?.role == 'prof') {
+      router.push('/professional');
+  }}
 
   //Funcion para cerrar sesión
   const logOut = () => {

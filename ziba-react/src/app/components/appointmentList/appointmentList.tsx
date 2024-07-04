@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, FC, useEffect, useState } from 'react';
 import './appointmentList.css'
-import { Card, CloseButton, Dropdown, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Card, CloseButton, Dropdown, ListGroup, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import Swal from 'sweetalert2';
 import { UserContext } from '@/app/context/user.context';
 import { getAppointmentsByClient } from '@/app/services/Services';
@@ -47,10 +47,14 @@ import { getAppointmentsByClient } from '@/app/services/Services';
   horario: '18:00',
 }];*/
 
+interface listProps {
+  data: any;
+}
+
 export const AppointmentList = () => {
   const [filter, setFilter] = useState('Año');
   const [cardsData, setCardsData] = useState<any[]>([])
-  const [filteredCards, setFilteredCards] = useState<typeof cardsData>(cardsData);
+  const [filteredCards, setFilteredCards] = useState<typeof data>(data);
   const { userData } = useContext(UserContext);
 
   const loadAppointments = async () => {
@@ -74,7 +78,7 @@ export const AppointmentList = () => {
 
     switch (filter) {
       case 'Día':
-        filtered = cardsData.filter((card: any) => {
+        filtered = data.filter((card: any) => {
           const cardDate = new Date(card.dia);
           return cardDate.toDateString() === now.toDateString();
         });
@@ -82,7 +86,7 @@ export const AppointmentList = () => {
       case 'Semana':
         const endOfWeek = new Date(now);
         endOfWeek.setDate(now.getDate() + 6);
-        filtered = cardsData.filter((card: any) => {
+        filtered = data.filter((card: any) => {
           const cardDate = new Date(card.dia);
           return cardDate >= now && cardDate <= endOfWeek;
         });
@@ -90,7 +94,7 @@ export const AppointmentList = () => {
       case 'Mes':
         const startOfMonth = new Date(now.getFullYear(), now.getMonth(), now.getDate());
         const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
-        filtered = cardsData.filter((card: any) => {
+        filtered = data.filter((card: any) => {
           const cardDate = new Date(card.dia);
           return cardDate >= startOfMonth && cardDate <= endOfMonth;
         });
@@ -98,13 +102,13 @@ export const AppointmentList = () => {
       case 'Año':
         const startOfYear = new Date(now.getFullYear(), now.getMonth(), now.getDate());
         const endOfYear = new Date(now.getFullYear(), 11, 31);
-        filtered = cardsData.filter((card: any) => {
+        filtered = data.filter((card: any) => {
           const cardDate = new Date(card.dia);
           return cardDate >= startOfYear && cardDate <= endOfYear;
         });
         break;
       default:
-        filtered = cardsData;
+        filtered = data;
     }
 
     setFilteredCards(filtered);
@@ -117,15 +121,37 @@ export const AppointmentList = () => {
       icon: "warning",
       background: "#fff",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
+      confirmButtonColor: "#558562",
+      cancelButtonColor: "#9e1515",
       confirmButtonText: "Aceptar",
       cancelButtonText: "Cerrar",
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire({
-          title: "¡Cancelado!",
+          title: "¡Listo!",
           text: "El turno ha sido cancelado exitosamente.",
+          icon: "success"
+        });
+      }
+    });
+  }
+
+  const checkAppointment = () => {
+    Swal.fire({
+      title: "¿Marcar como 'Atendido'?",
+      text: "Una vez hecho esto, no se puede revertir.",
+      icon: "warning",
+      background: "#fff",
+      showCancelButton: true,
+      confirmButtonColor: "#558562",
+      cancelButtonColor: "#9e1515",
+      confirmButtonText: "Aceptar",
+      cancelButtonText: "Cerrar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "¡Listo!",
+          text: "El turno ha sido marcado como atendido.",
           icon: "success"
         });
       }
@@ -154,7 +180,7 @@ export const AppointmentList = () => {
                   <img className='img-appointment-card' src={`imagenes/professionals/${card.professional}.png`} />
                   <Card.Body>
                     <div>
-                      <Card.Title>{card.speciality}</Card.Title>
+                      <Card.Title>{card.servicio || card.service}</Card.Title>
 
                     </div>
                     <div className='d-flex  justify-content-between container-info '>
@@ -163,7 +189,9 @@ export const AppointmentList = () => {
                           {card.professional}
                         </Card.Text>
                         <Card.Text>
-                          Servicio: {' '}{card.service}
+                          {card.especialidad ?
+                          `Servicio: ${' '}${card.especialidad}` :
+                          `Télefono: ${' '}${card.tel}`}
                         </Card.Text>
                       </div>
                       <div className='d-flex flex-column  justify-content-around container-day-hour'>
@@ -174,8 +202,8 @@ export const AppointmentList = () => {
                           Hora:{' '}{card.hour}hs
                         </Card.Text>
                       </div>
-                    </div>
-                  </Card.Body>
+                    </div>          
+                     {data.nombre ?
                   <OverlayTrigger
                     key='bottom'
                     placement='bottom'
@@ -186,8 +214,15 @@ export const AppointmentList = () => {
                     }
                   >
                     <CloseButton onClick={cancelAppointment} className='cancel-appointment-cross' aria-label="Hide" />
-                  </OverlayTrigger>
+                  </OverlayTrigger> :
+                  <div className='container-buttons-appointment'>
+                    <button onClick={checkAppointment} className='button-atendido-appointment'>Atendido</button>
+                    <button onClick={cancelAppointment} className='button-cancelar-appointment'>Cancelar turno</button>
+                  </div>
+}
 
+                  </Card.Body>
+       
                 </div>
               </Card>
             </div>
