@@ -8,7 +8,7 @@ import { NewAppointment } from "@/app/components/newAppointment/newAppointment";
 import './page.css'
 
 const cardsData = [{
-  profesion: 'depiladora',
+  profesion: 'depilacion',
   client: 'Ayelen Porqueres',
   tel: 2284659856,
   service: 'Depilación brasileña',
@@ -16,7 +16,7 @@ const cardsData = [{
   horario: '20:00',
 },
 {
-  profesion: 'cosmetóloga',
+  profesion: 'cosmetologia',
   client: 'Guadalupe Chojo',
   tel: 2284458714,
   service: 'Peeling',
@@ -24,7 +24,7 @@ const cardsData = [{
   horario: '15:00',
 },
 {
-  profesion: 'cosmetóloga',
+  profesion: 'cosmetologia',
   client: 'Helena Way',
   tel: 2284783256,
   service: 'Limpieza Facial',
@@ -32,7 +32,7 @@ const cardsData = [{
   horario: '16:00',
 },
 {
-  profesion: 'masajista',
+  profesion: 'masoterapia',
   client: 'Melina Sanchez',
   tel: 2284472196,
   service: 'Masaje cuerpo entero',
@@ -40,7 +40,7 @@ const cardsData = [{
   horario: '17:00',
 },
 {
-  profesion: 'manicura',
+  profesion: 'manicuria',
   client: 'Juana Flores',
   tel: 2284675218,
   service: 'Esculpidas',

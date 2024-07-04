@@ -1,7 +1,8 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useContext, useEffect, useState } from 'react';
 import './appointmentList.css'
 import { Card, CloseButton, Dropdown, ListGroup, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import Swal from 'sweetalert2';
+import { UserContext } from '@/app/context/user.context';
 
 interface listProps {
   data: any;
@@ -10,7 +11,7 @@ interface listProps {
 export const AppointmentList: React.FC<listProps> = ({data}) => {
   const [filter, setFilter] = useState('Año');
   const [filteredCards, setFilteredCards] = useState<typeof data>(data);
-
+  const { userData } = useContext(UserContext);
 
   useEffect(() => {
     filterCards(filter);
@@ -121,7 +122,10 @@ export const AppointmentList: React.FC<listProps> = ({data}) => {
             <div key={`${card.nombre}-${card.dia}-${card.horario}`} className='appointment-cards-container'>
               <Card className='appointment-cards'>
                 <div className='card-container'>
-                  <img className='img-appointment-card' src={`imagenes/professionals/${card.profesion}.png`} />
+                {userData?.role == 'client' ? (
+                    <img className='img-appointment-card d-flex align-items-center' src={`imagenes/professionals/${card.profesion}.png`}/>) : (
+                      <img className='img-appointment-card d-flex align-items-center' src={`imagenes/services/${card.profesion}.jpg`}/>
+                  ) }
                   <Card.Body>
                     <div>
                       <Card.Title>{card.servicio || card.service}</Card.Title>
