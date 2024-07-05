@@ -9,16 +9,16 @@ import Services from 'src/models/services.dto';
 export class ServicesService {
     constructor(private dbService: DatabaseService) {
     }
-    
+
     //Funcion que obtiene todos los servicios brindados por la estetica agrupados por especialidad
     async getAll(): Promise<Services[]> {
-        
+
         //Primero se obtienen las especialidades
         const resultQuery: RowDataPacket[] = await this.dbService.executeSelect(
             servicesQueries.selectAllSpecialties,
             [],
         );
-        
+
         let resultServices: Services[] = resultQuery.map((rs: RowDataPacket) => {
             return {
                 speciality: rs['speciality'],
@@ -26,13 +26,13 @@ export class ServicesService {
                 services: []
             };
         });
-        
+
         //luego obtengo los servicios para cada especilidad
         const resultQuery2: RowDataPacket[] = await this.dbService.executeSelect(
             servicesQueries.selectAllServices,
             [],
         );
-        
+
         resultQuery2.map((rs: RowDataPacket) => {
             resultServices.map((se) => {
                 if (rs['speciality'] == se.speciality) {
@@ -41,19 +41,19 @@ export class ServicesService {
                 return resultServices
             })
         });
-        
+
         return resultServices;
     }
-    
+
     //Funcion que obtiene todos los servicios brindados por la estetica con especialidad, profesional y horarios
     async getAllForAdmin(): Promise<any[]> {
-        
+
         //Primero se obtengo los servicio con especialidad y profesional
         const resultQuery: RowDataPacket[] = await this.dbService.executeSelect(
             servicesQueries.selectServiceWithSpeciality,
             [],
         );
-        
+
         let resultServices: any[] = resultQuery.map((rs: RowDataPacket) => {
             return {
                 id: rs['id_service'],
@@ -64,22 +64,22 @@ export class ServicesService {
                 price: rs['price'],
             };
         });
-        
+
         return resultServices;
     }
-    
+
     //Funcion que obtiene todos los turnos reservados de hoy en adelante
     async getAllApponintments(): Promise<any[]> {
-        
+
         const resultQuery: RowDataPacket[] = await this.dbService.executeSelect(
             servicesQueries.selectAllAppointments,
             [],
         );
-        
+
         let resultApponitments: any[] = resultQuery.map((rs: RowDataPacket) => {
             return {
                 id: rs['id_appointment'],
-                date: `${rs['date'].getDate()}-${rs['date'].getMonth()+1}-${rs['date'].getFullYear()}`,
+                date: `${rs['date'].getDate()}-${rs['date'].getMonth() + 1}-${rs['date'].getFullYear()}`,
                 hour: rs['hour'],
                 service: rs['service'],
                 user: `${rs['name']} ${rs['lastname']}`,
@@ -87,14 +87,36 @@ export class ServicesService {
         });
         return resultApponitments;
     }
-    
+
     //Funcion que obtiene los turnos de un determinado cliente
-    async getAClientAppointments(id_user: number): Promise<any[]> {
+    async getProfAppointments(id_user: number): Promise<any[]> {
+        const resultQuery: RowDataPacket[] = await this.dbService.executeSelect(
+            servicesQueries.selectAppointmentsbyProf,
+            [id_user],
+        );
+
+        let resultAppointments: any[] = resultQuery.map((rs: RowDataPacket) => {
+            return {
+                id: rs['id_appointment'],
+                attended: rs['state'],
+                date: rs['date'],
+                hour: rs['hour'],
+                service: rs['service'],
+                speciality: rs['speciality'],
+                client: `${rs['name']} ${rs['lastname']}`,
+                phone: rs['phone']
+            };
+        });
+        return resultAppointments;
+    }
+
+    //Funcion que obtiene los turnos de un determinado profesional
+    async getClientAppointments(id_user: number): Promise<any[]> {
         const resultQuery: RowDataPacket[] = await this.dbService.executeSelect(
             servicesQueries.selectAppointmentsbyClient,
             [id_user],
         );
-        
+
         let resultAppointments: any[] = resultQuery.map((rs: RowDataPacket) => {
             return {
                 id: rs['id_appointment'],
@@ -107,7 +129,6 @@ export class ServicesService {
         });
         return resultAppointments;
     }
-
 
     //Función que obtiene las especialidades que no tienen un profesional asignado
     async getSpecialtiesWhitoutProf(): Promise<any[]> {
@@ -195,7 +216,7 @@ export class ServicesService {
         }
     }
 
-    async deleteService(id_service:number): Promise<void> {
+    async deleteService(id_service: number): Promise<void> {
         try {
             //Deshabilita el servicio de la tabla servicios
             const resultQuery = await this.dbService.executeQuery(
@@ -203,10 +224,11 @@ export class ServicesService {
                 [id_service],
             );
             if (resultQuery.affectedRows != 1) {
-            throw new HttpException(
-                'No se pudo deshabilitar servicio',
-                HttpStatus.NOT_FOUND,
-            );}
+                throw new HttpException(
+                    'No se pudo deshabilitar servicio',
+                    HttpStatus.NOT_FOUND,
+                );
+            }
 
             //Borra los turnos futuros de ese servicio
             await this.dbService.executeQuery(
@@ -221,7 +243,7 @@ export class ServicesService {
         }
     }
 
-        async deleteAppointment(id_appointment:number): Promise<void> {
+    async deleteAppointment(id_appointment: number): Promise<void> {
         try {
             //Borra el turno con el id_appontment indicado
             const resultQuery = await this.dbService.executeQuery(
@@ -229,10 +251,32 @@ export class ServicesService {
                 [id_appointment],
             );
             if (resultQuery.affectedRows != 1) {
+                throw new HttpException(
+                    'No se pudo eliminar, turno no encontrado',
+                    HttpStatus.NOT_FOUND,
+                );
+            }
+        } catch (error) {
             throw new HttpException(
-                'No se pudo eliminar, turno no encontrado',
-                HttpStatus.NOT_FOUND,
-            );}
+                `Error eliminando turno: ${error.sqlMessage}`,
+                HttpStatus.INTERNAL_SERVER_ERROR,
+            );
+        }
+    }
+
+    async updateAppointment(id_appointment: number) {
+        try {
+            //Marca como atendido el turno
+            const resultQuery = await this.dbService.executeQuery(
+                servicesQueries.updateAppointment,
+                [id_appointment],
+            );
+            if (resultQuery.affectedRows != 1) {
+                throw new HttpException(
+                    'No se pudo eliminar, turno no encontrado',
+                    HttpStatus.NOT_FOUND,
+                );
+            }
         } catch (error) {
             throw new HttpException(
                 `Error eliminando turno: ${error.sqlMessage}`,

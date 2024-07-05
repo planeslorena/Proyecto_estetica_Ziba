@@ -3,12 +3,14 @@ import './appointmentList.css'
 import { Card, CloseButton, Dropdown, ListGroup, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import Swal from 'sweetalert2';
 import { UserContext } from '@/app/context/user.context';
+import { appointmentAttended, deleteAppointment } from '@/app/services/Services';
 
 interface listProps {
   data: any;
+  updateData: () => void;
 }
 
-export const AppointmentList: React.FC<listProps> = ({ data }) => {
+export const AppointmentList: React.FC<listProps> = ({ data , updateData }) => {
   const [filter, setFilter] = useState('Año');
   const [filteredCards, setFilteredCards] = useState<typeof data>(data);
   const { userData } = useContext(UserContext);
@@ -63,7 +65,7 @@ export const AppointmentList: React.FC<listProps> = ({ data }) => {
     setFilteredCards(filtered);
   };
 
-  const cancelAppointment = () => {
+  const cancelAppointment = (id:number) => {
     Swal.fire({
       title: "¿Está seguro?",
       text: "Una vez cancelado el turno, no se puede revertir.",
@@ -74,18 +76,28 @@ export const AppointmentList: React.FC<listProps> = ({ data }) => {
       cancelButtonColor: "#9e1515",
       confirmButtonText: "Aceptar",
       cancelButtonText: "Cerrar",
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
+        const resp =  await deleteAppointment(id);
+        if (resp == 200) {
         Swal.fire({
           title: "¡Listo!",
           text: "El turno ha sido cancelado exitosamente.",
           icon: "success"
         });
+        updateData();
+        } else {
+          Swal.fire({
+            title: `Error`,
+            text: `No se pudo cancelar el turno`,
+            icon: "error"
+          });
+        }
       }
     });
   }
 
-  const checkAppointment = () => {
+  const checkAppointment = (id:number) => {
     Swal.fire({
       title: "¿Marcar como 'Atendido'?",
       text: "Una vez hecho esto, no se puede revertir.",
@@ -96,13 +108,23 @@ export const AppointmentList: React.FC<listProps> = ({ data }) => {
       cancelButtonColor: "#9e1515",
       confirmButtonText: "Aceptar",
       cancelButtonText: "Cerrar",
-    }).then((result) => {
+    }).then(async(result) => {
       if (result.isConfirmed) {
+        const resp = await appointmentAttended(id);
+        if (resp == 200) {
         Swal.fire({
           title: "¡Listo!",
           text: "El turno ha sido marcado como atendido.",
           icon: "success"
         });
+        updateData();
+        } else {
+          Swal.fire({
+            title: `Error`,
+            text: `No se pudo marcar como atendido el turno`,
+            icon: "error"
+          });
+        }
       }
     });
   }
@@ -146,7 +168,7 @@ export const AppointmentList: React.FC<listProps> = ({ data }) => {
                         :
                         <div className='service-text'>
                           <Card.Text className='prof-text'>Cliente: {card.client}</Card.Text>
-                          <Card.Text className='prof-text'>Télefono: {card.tel}</Card.Text>
+                          <Card.Text className='prof-text'>Télefono: {card.phone}</Card.Text>
                         </div>
                       }
                       <div className='d-flex flex-column  justify-content-around container-day-hour'>
@@ -168,11 +190,11 @@ export const AppointmentList: React.FC<listProps> = ({ data }) => {
                           </Tooltip>
                         }
                       >
-                        <CloseButton onClick={cancelAppointment} className='cancel-appointment-cross' aria-label="Hide" />
+                        <CloseButton onClick={() => cancelAppointment(card.id)} className='cancel-appointment-cross' aria-label="Hide" />
                       </OverlayTrigger> :
                       <div className='container-buttons-appointment'>
-                        <button onClick={checkAppointment} className='button-atendido-appointment'>Atendido</button>
-                        <button onClick={cancelAppointment} className='button-cancelar-appointment'>Cancelar turno</button>
+                        <button onClick={() => checkAppointment(card.id)} disabled = {card.attended.data[0] == 1} className='button-atendido-appointment'>Atendido</button>
+                        <button onClick={() => cancelAppointment(card.id)} disabled = {card.attended.data[0] == 1} className='button-cancelar-appointment'>Cancelar turno</button>
                       </div>
                     }
 
@@ -187,3 +209,4 @@ export const AppointmentList: React.FC<listProps> = ({ data }) => {
     </div>
   );
 };
+

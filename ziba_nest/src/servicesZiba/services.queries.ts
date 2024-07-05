@@ -42,6 +42,20 @@ const servicesQueries = {
                                 and p.id_user = u2.id_user
                                 where u.id_user = ?
                                 and date >= sysdate();`,
+selectAppointmentsbyProf:`select a.id_appointment,a.state,date,hour,s.name service, sp.name speciality, u.name, u.lastname, u.phone
+                                from appointments a 
+                                join users u 
+                                join services s 
+                                join specialties sp
+                                join professional p 
+                                join users u2
+                                on a.id_user = u.id_user 
+                                and a.id_service = s.id_service
+                                and s.id_speciality = sp.id_speciality 
+                                and p.id_speciality = sp.id_speciality 
+                                and p.id_user = u2.id_user
+                                where p.id_user = ?
+                                and date >= sysdate();`,
     selectSpecialtiesWhitoutProf:`select s.id_speciality, s.name
                             from specialties s 
                             left join (select p.* from professional p inner join users u on p.id_user = u.id_user where u.active = 1) p
@@ -54,6 +68,7 @@ const servicesQueries = {
                 where id_service = ?;`,
     deleteService: `update services set active = 0 where id_service = ?`,
     deleteAppointmentsbyService:'delete from appointments where id_service = ? and date >= sysdate() and state = 0;' ,
-    deleteAppointment: 'delete from appointments where id_appointment = ?'
+    deleteAppointment: 'delete from appointments where id_appointment = ?',
+    updateAppointment:'update appointments set state = 1 where id_appointment = ?'
 }
 export default servicesQueries;

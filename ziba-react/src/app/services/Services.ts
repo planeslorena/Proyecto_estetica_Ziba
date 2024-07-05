@@ -18,7 +18,12 @@ export const getAllAppointments = async (): Promise<any> => {
 }
 
 export const getAppointmentsByClient = async (id_user:any): Promise<any> => {
-  const response: AxiosResponse<any, any> = await clientAxios.get('services/appointments/'+id_user);
+  const response: AxiosResponse<any, any> = await clientAxios.get('services/appointments/client/'+id_user);
+  return response.data;
+}
+
+export const getAppointmentsByProf = async (id_user:any): Promise<any> => {
+  const response: AxiosResponse<any, any> = await clientAxios.get('services/appointments/prof/'+id_user);
   return response.data;
 }
 
@@ -62,6 +67,15 @@ export const deleteService = async (id:number) => {
 export const deleteAppointment = async (id:number) => {
   try {
     const respuesta: AxiosResponse<any, any> = await clientAxios.delete('/services/appointments/'+id);
+    return respuesta.status;
+  } catch (error:any) {
+    return error.response.data.statusCode;
+  }
+}
+
+export const appointmentAttended = async (id:number) => {
+  try {
+    const respuesta: AxiosResponse<any, any> = await clientAxios.put('/services/appointments/'+id);
     return respuesta.status;
   } catch (error:any) {
     return error.response.data.statusCode;

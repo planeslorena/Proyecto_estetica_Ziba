@@ -41,9 +41,16 @@ export class ServicesController {
 
   //OBTENER LOS TURNOS DE UN CLIENTE
   @UseGuards(JwtMiddlewareGuard)
-  @Get('/appointments/:id_user')
-  async getAClientAppointments(@Param('id_user', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST, }),) id_user: number) {
-    return this.servicesService.getAClientAppointments(id_user);
+  @Get('/appointments/client/:id_user')
+  async getClientAppointments(@Param('id_user', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST, }),) id_user: number) {
+    return this.servicesService.getClientAppointments(id_user);
+  }
+
+  //OBTENER LOS TURNOS DE UN PROFESIONAL
+  @UseGuards(JwtMiddlewareGuard)
+  @Get('/appointments/prof/:id_user')
+  async getProfAppointments(@Param('id_user', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST, }),) id_user: number) {
+    return this.servicesService.getProfAppointments(id_user);
   }
 
   //CREAR SERVICIO
@@ -66,6 +73,13 @@ export class ServicesController {
   async deleteUser(
     @Param('id_service', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST, }),) id_service: number): Promise<void> {
     this.servicesService.deleteService(id_service);
+  }
+
+  //MARCAR COMO ATENDIDO EL TURNO
+  @UseGuards(JwtMiddlewareGuard)
+  @Put('/appointments/:id_appointment')
+  async updateAppointment(@Param('id_appointment', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST, }),) id_appointment: number) {
+    return this.servicesService.updateAppointment(id_appointment);
   }
 
   //ELIMINAR TURNO

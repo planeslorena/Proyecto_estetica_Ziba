@@ -45,7 +45,7 @@ function ClientPage() {
             </div>
           </div>
           <div className="appointment-list">
-            <AppointmentList data={cardsData}></AppointmentList>
+            <AppointmentList data={cardsData} updateData={loadAppointments}></AppointmentList>
           </div>
         </div>
         <Footer></Footer>

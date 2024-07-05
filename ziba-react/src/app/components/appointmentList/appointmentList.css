@@ -81,9 +81,25 @@
     width: 150px;
 }
 
+.button-atendido-appointment:disabled{
+    margin-right: 5px;
+    border: solid 1px #6b756c;
+    background-color: #9eaaa0;
+    color: #f4f3ed;
+    width: 150px;
+}
+
 .button-cancelar-appointment{
     border: solid 1px #a74122;
     background-color: #ad4537;
+    color: #f4f3ed;
+    width: 150px;
+}
+
+.button-cancelar-appointment:disabled{
+    margin-right: 5px;
+    border: solid 1px #6b756c;
+    background-color: #9eaaa0;
     color: #f4f3ed;
     width: 150px;
 }
