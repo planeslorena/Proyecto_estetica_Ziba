@@ -6,12 +6,12 @@ import { Menu } from "@/app/components/nav/nav";
 import { useState } from "react";
 
 const specialities = [
-  { img: 'cosmetologia', prof: 'Marisa Ruiz', price: '10000', services: [{id: 1, name: 'Peeling'},{id: 2, name: 'Limpieza facial'}] },
-  { img: 'depilacion', prof: 'Romina Benegas', price: '10000', services: [{id: 3, name:'Bozo'}, {id: 4, name:'Piernas'}] },
-  { img: 'manicuria', prof: 'Maiten Suarez', price: '10000', services: [{id: 5, name:'Soft gel'}, {id: 6, name:'Semipermanente'}] },
-  { img: 'maquillaje', prof: 'Eva Jimenez', price: '10000', services: [{id: 7, name:'Novias'}, {id: 8, name:'Quinceañeras'}] },
-  { img: 'masoterapia', prof: 'Naomi Almeida', price: '10000', services: [{id: 9, name:'Masaje terapéutico'}, {id: 10, name:'Masaje lifático'}] },
-  { img: 'peluqueria', prof: 'Irene Acosta', price: '10000', services: [{id: 11, name:'Corte'}, {id: 12, name:'Nutrición'}] },
+  { img: 'cosmetologia', prof: 'Marisa Ruiz', price: '10000', services: [{id: 1, name: 'Peeling', desc: 'Lorem ipsum'},{id: 2, name: 'Limpieza facial', desc: 'Lorem ipsum'}] },
+  { img: 'depilacion', prof: 'Romina Benegas', price: '10000', services: [{id: 3, name:'Bozo', desc: 'Lorem ipsum'}, {id: 4, name:'Piernas', desc: 'Lorem ipsum'}] },
+  { img: 'manicuria', prof: 'Maiten Suarez', price: '10000', services: [{id: 5, name:'Soft gel', desc: 'Lorem ipsum'}, {id: 6, name:'Semipermanente', desc: 'Lorem ipsum'}] },
+  { img: 'maquillaje', prof: 'Eva Jimenez', price: '10000', services: [{id: 7, name:'Novias', desc: 'Lorem ipsum'}, {id: 8, name:'Quinceañeras', desc: 'Lorem ipsum'}] },
+  { img: 'masoterapia', prof: 'Naomi Almeida', price: '10000', services: [{id: 9, name:'Masaje terapéutico', desc: 'Lorem ipsum'}, {id: 10, name:'Masaje lifático', desc: 'Lorem ipsum'}] },
+  { img: 'peluqueria', prof: 'Irene Acosta', price: '10000', services: [{id: 11, name:'Corte', desc: 'Lorem ipsum'}, {id: 12, name:'Nutrición', desc: 'Lorem ipsum'}] },
 ]
 
 function AppointmentPage() {

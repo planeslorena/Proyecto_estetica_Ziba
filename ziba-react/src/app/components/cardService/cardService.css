@@ -30,19 +30,33 @@
 .title-secondary{
     background-color: #9e7676;
     height: 50px;
+    margin-bottom: 0 !important;
 }
 
 .p-title{
     color: white;
-    margin: 0;
-    & .p-service{
-        font-size: 30px;
-    }
+}
+
+.p-service{
+    font-size: 25px;    
+    margin: 0px 0px 0px 320px;
+}
+
+.p-prof{
+    margin:0px 40px 0px 0px;
+    padding: 70px;
+}
+
+.select-service{
+    margin-left: 275px;
+}
+
+.p-que-es{
+    margin: 0px 360px 0px 0px;
 }
 
 .p-input-service{
     margin-bottom: 0;
-
 }
 
 .container-option-hour{
