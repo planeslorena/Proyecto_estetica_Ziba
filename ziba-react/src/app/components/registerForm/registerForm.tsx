@@ -58,12 +58,11 @@ export const RegisterForm: React.FC<registerProps> = ({ onSwitchToLogin }) => {
     const repeatPasswordValue = watch("repeatPassword", "");
 
     const checkComplexity = (password: string): boolean => {
-        // Define your password complexity rules here
         const minLength = 8;
         const hasUpperCase = /[A-Z]/.test(password);
         const hasLowerCase = /[a-z]/.test(password);
         const hasNumber = /\d/.test(password);
-        const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+        const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>+-_[]¿¡]/.test(password);
 
         return (
             password.length >= minLength &&

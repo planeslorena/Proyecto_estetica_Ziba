@@ -25,7 +25,8 @@ class User {
   phone: number;
 
   @IsString()
-  role: string
+  @IsOptional()
+  role?: string
 }
 
 export default User;

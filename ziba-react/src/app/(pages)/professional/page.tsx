@@ -7,17 +7,18 @@ import { Footer } from "@/app/components/footer/footer";
 import { NewAppointment } from "@/app/components/newAppointment/newAppointment";
 import './page.css'
 import { useContext, useEffect, useState } from "react";
-import { getAppointmentsByClient } from "@/app/services/Services";
 import { UserContext } from "@/app/context/user.context";
+import { getAppointmentsByProf } from "@/app/services/Services";
 
-function ClientPage() {
+
+function ProfessionalPage() {
 
   const { userData } = useContext(UserContext);
   const [cardsData, setCardsData] = useState([])
 
   const loadAppointments = async () => {
       const id_user = userData?.id;
-      const  newCardsData = await getAppointmentsByClient(id_user);
+      const  newCardsData = await getAppointmentsByProf(id_user);
       setCardsData(newCardsData);
   }
 
@@ -25,13 +26,11 @@ function ClientPage() {
     loadAppointments();
   }, []);
 
-  
-
   return (
     <>
       <header>
         <div>
-          <Menu></Menu>
+            <Menu></Menu>
         </div>
 
       </header>
@@ -40,12 +39,9 @@ function ClientPage() {
         <div className="d-flex">
           <div className="d-flex flex-column info-user-appointment">
             <InfoUser></InfoUser>
-            <div className="new-appointment">
-              <NewAppointment></NewAppointment>
-            </div>
           </div>
           <div className="appointment-list">
-            <AppointmentList data={cardsData} updateData={loadAppointments}></AppointmentList>
+              <AppointmentList data={cardsData} updateData={loadAppointments}></AppointmentList>
           </div>
         </div>
         <Footer></Footer>
@@ -55,4 +51,5 @@ function ClientPage() {
   )
 }
 
-export default withRoles(ClientPage, 'client', '/home');
+
+export default withRoles(ProfessionalPage,'prof', '/home');

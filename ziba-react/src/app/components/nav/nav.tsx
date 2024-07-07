@@ -21,8 +21,9 @@ export function Menu() {
       router.push('/client');
     } else if (userData?.role == 'admin') {
       router.push('/admin');
-    }
-  }
+    }else if (userData?.role == 'prof') {
+      router.push('/professional');
+  }}
 
   //Funcion para cerrar sesión
   const logOut = () => {
@@ -79,16 +80,16 @@ export function Menu() {
             <Nav className="align-items-center d-flex">
               {isActive ? (
                 <Dropdown>
-                  <Dropdown.Toggle variant="success" id="dropdown-basic">
+                  <Dropdown.Toggle className='dropdown-account' variant="success" id="dropdown-basic">
                     Hola, {userData?.name}!
                   </Dropdown.Toggle>
-                  <Dropdown.Menu>
+                  <Dropdown.Menu className='dropdown-menu-account'>
                     <Dropdown.Item onClick={() => { routerRole() }}>Perfil</Dropdown.Item>
                     <Dropdown.Item onClick={logOut}>Cerrar sesión</Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
               ) : (
-                <Nav.Link className='cuenta' onClick={() => router.push('/authPage')}>CUENTA</Nav.Link>
+                <Nav.Link className='cuenta' onClick={() => router.push('/authPage')}>ACCEDER</Nav.Link>
               )
               }
               <i className="bi bi-person-circle"></i>
