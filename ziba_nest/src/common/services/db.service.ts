@@ -15,7 +15,7 @@ export class DatabaseService {
     this.pool = createPool({
       port: 3306,
       database: 'ziba',
-      password: 'root2024',
+      password: 'mySQL2022<3',
       host: 'localhost',
       user: 'root',
       // cantidad maxima de conexiones en el pool

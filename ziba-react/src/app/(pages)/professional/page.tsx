@@ -17,9 +17,9 @@ function ProfessionalPage() {
   const [cardsData, setCardsData] = useState([])
 
   const loadAppointments = async () => {
-      const id_user = userData?.id;
-      const  newCardsData = await getAppointmentsByProf(id_user);
-      setCardsData(newCardsData);
+    const id_user = userData?.id;
+    const newCardsData = await getAppointmentsByProf(id_user);
+    setCardsData(newCardsData);
   }
 
   useEffect(() => {
@@ -30,7 +30,7 @@ function ProfessionalPage() {
     <>
       <header>
         <div>
-            <Menu></Menu>
+          <Menu></Menu>
         </div>
 
       </header>
@@ -39,9 +39,12 @@ function ProfessionalPage() {
         <div className="d-flex">
           <div className="d-flex flex-column info-user-appointment">
             <InfoUser></InfoUser>
+            <div className="new-appointment">
+              <NewAppointment role={userData?.role}></NewAppointment>
+            </div>
           </div>
           <div className="appointment-list">
-              <AppointmentList data={cardsData} updateData={loadAppointments}></AppointmentList>
+            <AppointmentList data={cardsData} updateData={loadAppointments}></AppointmentList>
           </div>
         </div>
         <Footer></Footer>
@@ -52,4 +55,4 @@ function ProfessionalPage() {
 }
 
 
-export default withRoles(ProfessionalPage,'prof', '/home');
+export default withRoles(ProfessionalPage, 'prof', '/home');

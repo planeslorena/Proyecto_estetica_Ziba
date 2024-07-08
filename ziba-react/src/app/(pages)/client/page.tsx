@@ -41,7 +41,7 @@ function ClientPage() {
           <div className="d-flex flex-column info-user-appointment">
             <InfoUser></InfoUser>
             <div className="new-appointment">
-              <NewAppointment></NewAppointment>
+              <NewAppointment role={userData?.role}></NewAppointment>
             </div>
           </div>
           <div className="appointment-list">
