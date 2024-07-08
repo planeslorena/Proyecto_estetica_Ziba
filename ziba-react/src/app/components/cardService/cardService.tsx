@@ -31,9 +31,10 @@ const schedules: Schedule[] = [
 
 interface cardServiceProps {
     speciality: any,
+    currentPage: number,
 }
 
-export const CardService: React.FC<cardServiceProps> = ({ speciality }) => {
+export const CardService: React.FC<cardServiceProps> = ({ speciality, currentPage }) => {
     const [show, setShow] = useState<any>(false);
     const [value, setValue] = useState<any>(new Date());
     const [availableTimes, setAvailableTimes] = useState<string[]>([]);
@@ -41,6 +42,7 @@ export const CardService: React.FC<cardServiceProps> = ({ speciality }) => {
     const [selectedService, setSelectedService] = useState<string>('');
     const [selectedDescription, setSelectedDescription] = useState<string>('');
     const { register, handleSubmit, formState: { errors, isValid }, control } = useForm<data>();
+
     const onSubmit: SubmitHandler<data> = (data) => {
         console.log(data);
     }
@@ -87,6 +89,11 @@ export const CardService: React.FC<cardServiceProps> = ({ speciality }) => {
         }
     }, [value]);
 
+    useEffect(() => {
+        setSelectedService('');
+        setSelectedDescription('');
+    }, [currentPage])
+
     return (
         <div className="d-flex  container-card-service-dos">
             <Card className="d-flex flex-row  container-card-service">
@@ -103,7 +110,7 @@ export const CardService: React.FC<cardServiceProps> = ({ speciality }) => {
                                         required: 'Por favor seleccione un servicio'
                                     })}  
                                     onChange={(e) => {
-                                        const selectedServiceId = parseInt(e.target.value, 10);
+                                        const selectedServiceId = parseInt(e.target.value, 10);                                       
                                         const selectedService = speciality.services.find((service: any) => service.id === selectedServiceId);
                                         if (selectedService) {
                                             setSelectedService(selectedService.name);
