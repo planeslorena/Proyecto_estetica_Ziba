@@ -158,6 +158,12 @@
 
 }
 
+.container-duration{
+    height: auto;
+    padding-top: 2%;
+
+}
+
 .cancel-appointment{
     align-self: center;
     margin-right: 2%;

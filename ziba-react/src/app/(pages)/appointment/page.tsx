@@ -3,7 +3,8 @@ import { withRoles } from "@/app/components/HOC/whitRoles";
 import { CardService } from "@/app/components/cardService/cardService";
 import CustomPagination from "@/app/components/cardService/pagination";
 import { Menu } from "@/app/components/nav/nav";
-import { useState } from "react";
+import { getInfoServices } from "@/app/services/Services";
+import { useEffect, useState } from "react";
 
 const specialities = [
   { img: 'cosmetologia', prof: 'Marisa Ruiz', price: '10000', services: [{id: 1, name: 'Peeling', desc: 'Lorem ipsum'},{id: 2, name: 'Limpieza facial', desc: 'Lorem ipsum'}] },
@@ -17,8 +18,20 @@ const specialities = [
 function AppointmentPage() {
   const [currentPage, setCurrentPage] = useState(1); // set the current page
   const pageSize = 2; // show row in table
+  const [infoServices, setInfoServices] = useState([]);
+  const [selectedService, setSelectedService] = useState({ id_service: 0, name: '', price: 0, description: '', duration: 0 });
 
-  const paginatedData = specialities.slice(
+
+  const getServices = async () => {
+    const infoServices = await getInfoServices();
+    setInfoServices(infoServices);
+  }
+
+  useEffect(() => {
+    getServices();
+  }, []);
+
+  const paginatedData = infoServices.slice(
     (currentPage - 1) * pageSize,
     currentPage * pageSize
   );
@@ -31,18 +44,17 @@ function AppointmentPage() {
       </header>
 
       <main>
-        {paginatedData.map((specialities: any) => (
+        {paginatedData.map((info: any) => (
           <div className="d-flex flex-column align-items-center ">
 
             <>
-              <CardService speciality={specialities}></CardService>
-
+              <CardService infoServices={info} ></CardService>
             </>
 
           </div>
         ))}
         <CustomPagination
-          itemsCount={specialities.length}
+          itemsCount={infoServices.length}
           itemsPerPage={pageSize}
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
@@ -53,4 +65,4 @@ function AppointmentPage() {
   )
 }
 
-export default withRoles(AppointmentPage, 'client', '/home')
+export default AppointmentPage

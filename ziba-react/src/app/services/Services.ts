@@ -37,6 +37,11 @@ export const getSpecialtiesWhitProf = async (): Promise<any> => {
   return response.data;
 }
 
+export const getAvailableTimes = async (data:any): Promise<any> => {
+  const response: AxiosResponse<any, any> = await clientAxios.get('services/availableTimes', {params: data });
+  return response.data;
+}
+
 export const createService = async (data:any) => {
   try {
     const response: AxiosResponse<any, any> = await clientAxios.post('services',data);
@@ -59,6 +64,15 @@ export const deleteService = async (id:number) => {
   try {
     const respuesta: AxiosResponse<any, any> = await clientAxios.delete('/services/'+id);
     return respuesta.status;
+  } catch (error:any) {
+    return error.response.data.statusCode;
+  }
+}
+
+export const createAppointment = async (data:any) => {
+  try {
+    const response: AxiosResponse<any, any> = await clientAxios.post('/services/appointments',data);
+    return response.status;
   } catch (error:any) {
     return error.response.data.statusCode;
   }

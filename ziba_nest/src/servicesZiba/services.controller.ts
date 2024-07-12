@@ -1,17 +1,20 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post, Req, UseGuards, Delete, HttpStatus, Put } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseIntPipe, Post, Req, UseGuards, Delete, HttpStatus, Put, Query } from '@nestjs/common';
 import { JwtMiddlewareGuard } from 'src/common/services/jwtGuard.service';
 import { ServicesService } from './services.service';
+import Appointment from 'src/models/appointment.dto';
 
 @Controller('/services')
 export class ServicesController {
 
   constructor(private servicesService: ServicesService) { }
 
+  //OBTENER LOS SERVICIOS PARA EL HOME Y EL TURNERO
   @Get()
   async getAllServices() {
     return this.servicesService.getAll();
   }
 
+  //OBTIENE LOS SERVICIO PARA LA PAGE DE ADMIN
   @UseGuards(JwtMiddlewareGuard)
   @Get('/admin')
   async getAllForAdmin() {
@@ -53,6 +56,15 @@ export class ServicesController {
     return this.servicesService.getProfAppointments(id_user);
   }
 
+  //OBTENER LOS HORARIOS DISPONIBLES DE UN SERVICIO
+  @Get('/availableTimes')
+  async getAvailableTimes(
+    @Query('id_service') id_service: number,
+    @Query('day') day: string,
+  ) {
+    return this.servicesService.getAvailableTimes(id_service, day);
+  }
+
   //CREAR SERVICIO
   @UseGuards(JwtMiddlewareGuard)
   @Post()
@@ -75,6 +87,13 @@ export class ServicesController {
     this.servicesService.deleteService(id_service);
   }
 
+  //CREAR SERVICIO
+  @UseGuards(JwtMiddlewareGuard)
+  @Post('/appointments')
+  async createAppointment(@Body() body: Appointment) {
+    return this.servicesService.createAppointment(body);
+  }
+
   //MARCAR COMO ATENDIDO EL TURNO
   @UseGuards(JwtMiddlewareGuard)
   @Put('/appointments/:id_appointment')
@@ -89,4 +108,6 @@ export class ServicesController {
     @Param('id_appointment', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST, }),) id_appointment: number): Promise<void> {
     this.servicesService.deleteAppointment(id_appointment);
   }
+
+
 } 
