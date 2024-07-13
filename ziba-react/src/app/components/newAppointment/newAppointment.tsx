@@ -1,5 +1,5 @@
-import './newAppointment.css';
 import { useRouter } from 'next/navigation';
+import './newAppointment.css';
 
 
 export const NewAppointment = () => {
