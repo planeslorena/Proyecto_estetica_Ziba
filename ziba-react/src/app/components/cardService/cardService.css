@@ -1,6 +1,7 @@
 
 .container-card-service-dos{
     width: 80%;
+    padding: 2%;
   
 }
 .container-card-service{
@@ -10,8 +11,6 @@
     border: none !important;
     border-radius: 0 !important;
     margin-bottom: 1rem;
-   
-    
 }
 
 .form-service{
