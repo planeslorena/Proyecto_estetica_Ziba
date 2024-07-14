@@ -21,6 +21,17 @@ const servicesQueries = {
                                     and se.id_speciality  = s.id_speciality
                                     where u.active = 1
                                     and se.active = 1;`,
+    selectServiceBySpeciality: `select se.id_service, se.name service, se.duration  
+                                    from specialties s 
+                                    join services se
+                                    on se.id_speciality  = s.id_speciality
+                                    where se.id_speciality = ?
+                                    and se.active = 1`,
+    selectCalendarBySpeciality: `select * 
+                                    from calendar c
+                                    join professional p 
+                                    on c.id_professional = p.id_professional 
+                                    where p.id_speciality = ?`,
     selectAllAppointments: `select a.id_appointment, date,hour,u.name, u.lastname, s.name service
                             from appointments a 
                             join users u 
@@ -75,7 +86,7 @@ const servicesQueries = {
                                 on a.id_service = s.id_service 
                                 where date = ?
                                 and s.id_speciality  = ?;`,
-    selectAppointmentsByClientAndDate:`select a.hour,s.duration,s.duration/30 cantidad
+    selectAppointmentsByClientAndDate: `select a.hour,s.duration,s.duration/30 cantidad
                                         from appointments a 
                                         join services s 
                                         on a.id_service = s.id_service 

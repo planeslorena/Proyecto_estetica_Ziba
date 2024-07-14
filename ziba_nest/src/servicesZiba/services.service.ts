@@ -95,6 +95,25 @@ export class ServicesService {
         return resultServices;
     }
 
+    //Funcion que obtiene todos los servicios brindados de determinada especialidad
+    async getServicesBySpeciality(id_speciality: number): Promise<any[]> {
+
+        const resultQuery: RowDataPacket[] = await this.dbService.executeSelect(
+            servicesQueries.selectServiceBySpeciality,
+            [id_speciality],
+        );
+
+        let resultServices: any[] = resultQuery.map((rs: RowDataPacket) => {
+            return {
+                id: rs['id_service'],
+                service: rs['service'],
+                duration: rs['duration'],
+            };
+        });
+
+        return resultServices;
+    }
+
     //Funcion que obtiene todos los turnos reservados de hoy en adelante
     async getAllApponintments(): Promise<any[]> {
 
@@ -219,6 +238,23 @@ export class ServicesService {
         }
     }
 
+    async getAvailableDays(id_speciality: number): Promise<any[]> {
+        const resultQuery: RowDataPacket[] = await this.dbService.executeSelect(
+            servicesQueries.selectCalendarBySpeciality,
+            [id_speciality],
+        );
+
+        let resultCalendar: any[] = resultQuery.map((rs: RowDataPacket) => {
+            return {
+                day: rs['week_day'],
+                hour_begin: rs['hour_begin'],
+                hour_end: rs['hour_end'],
+            };
+        });
+        return resultCalendar;
+    }
+
+
     //Función que obtiene las especialidades que no tienen un profesional asignado
     async getSpecialtiesWhitoutProf(): Promise<any[]> {
 
@@ -339,13 +375,13 @@ export class ServicesService {
             const resultQuery: RowDataPacket[] = await this.dbService.executeSelect(
                 servicesQueries.selectAppointmentsByClientAndDate,
                 [appoint.date,
-                 appoint.id_user
+                appoint.id_user
                 ],
             );
 
             //Cargo todos los horarios que ocupa el turno que se quiere reservar
             const times = Array.from({ length: appoint.duration / 30 }, (_, i: number) =>
-                moment(appoint.hour,'HH:mm').add(30 * i, 'minutes').format('HH:mm')
+                moment(appoint.hour, 'HH:mm').add(30 * i, 'minutes').format('HH:mm')
             );
 
             //Inserto todos los horarios que ocupan esos turnos
@@ -359,7 +395,7 @@ export class ServicesService {
             })
 
             //Chequeo si el turno que se quiere reservar se superpone con otro turno ya reservado
-            if (times.some(time => appointments.includes(time))){
+            if (times.some(time => appointments.includes(time))) {
                 throw new HttpException(
                     'El usuario ya tiene un turno en ese horario',
                     HttpStatus.CONFLICT,
@@ -369,9 +405,9 @@ export class ServicesService {
             await this.dbService.executeQuery(
                 servicesQueries.insertAppointment,
                 [appoint.date,
-                 appoint.hour,
-                 appoint.id_user,
-                 appoint.id_service
+                appoint.hour,
+                appoint.id_user,
+                appoint.id_service
                 ],
             );
 

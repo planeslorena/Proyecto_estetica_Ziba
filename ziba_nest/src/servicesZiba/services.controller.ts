@@ -21,6 +21,13 @@ export class ServicesController {
     return this.servicesService.getAllForAdmin();
   }
 
+  //OBTIENE LOS SERVICIOS DE UNA DETERMINADA ESPECIALIDAD
+  @UseGuards(JwtMiddlewareGuard)
+  @Get('/specialties/:id_speciality')
+  async getServicesBySpeciality(@Param('id_speciality', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST, }),) id_speciality: number) {
+    return this.servicesService.getServicesBySpeciality(id_speciality);
+  }
+
   //OBTENER TODOS LOS TURNOS RESERVADOS
   @UseGuards(JwtMiddlewareGuard)
   @Get('/appointments')
@@ -65,6 +72,14 @@ export class ServicesController {
     return this.servicesService.getAvailableTimes(id_service, day);
   }
 
+  //OBTENER LOS DIAS DISPONIBLES DE UN SERVICIO
+  @Get('/availableDays/:id_speciality')
+  async getAvailableDays(
+    @Param('id_speciality', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST, }),) id_speciality: number
+  ) {
+    return this.servicesService.getAvailableDays(id_speciality);
+  }
+  
   //CREAR SERVICIO
   @UseGuards(JwtMiddlewareGuard)
   @Post()
