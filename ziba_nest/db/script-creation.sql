@@ -56,14 +56,14 @@ create table if not exists calendar (
 );
 
 create table if not exists appointments (
-	id_appointments int not null auto_increment,
+	id_appointment int not null auto_increment,
 	date date not null,
 	hour time not null,
 	id_user int not null ,
 	id_service int not null,
 	/*0-reservado 1-atendido*/
 	state bit not null,
-	primary key (id_appointments),
+	primary key (id_appointment),
 	constraint FK_appointments_services foreign key (id_service) references services(id_service),
 	constraint FK_appointments_user foreign key (id_user) references users(id_user)
 );
