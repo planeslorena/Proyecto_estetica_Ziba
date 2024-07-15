@@ -105,6 +105,38 @@ export class UserService {
         }
     }
 
+    //OBTENER UN CLIENTE BUSCANDO POR DNI
+    async getClientByDni(dni: number): Promise<User> {
+        try{
+        //Se obtiene el usuario de la base de datos filtrando por dni
+        const resultQuery: RowDataPacket[] = await this.dbService.executeSelect(
+            userQueries.selectUserByDni,
+            [dni],
+        );
+
+        //Si no encuentro el usuario retorno el error
+        if (resultQuery.length == 0) {
+            throw new HttpException(
+                `No se encuentra cliente con ese DNI`,
+                HttpStatus.NOT_FOUND,
+            );
+        } else {
+            return {
+                mail: resultQuery[0].mail,
+                name: resultQuery[0].name,
+                lastname: resultQuery[0].lastname,
+                dni: resultQuery[0].dni,
+                phone: resultQuery[0].phone,
+            };
+        }
+        } catch (error) {
+            throw new HttpException(
+                `Error buscando cliente: ${error.message}`,
+                error.status,
+            );
+        }
+    }
+
     //CREAR USUARIO
     async createUser(user: User): Promise<number> {
         //Se encripta la contraseña que llega de la registración
@@ -241,10 +273,11 @@ export class UserService {
                     HttpStatus.CONFLICT,
                 );
             } else {
-            throw new HttpException(
-                `Error actualizando usuario: ${error.sqlMessage}`,
-                HttpStatus.INTERNAL_SERVER_ERROR,
-            );}
+                throw new HttpException(
+                    `Error actualizando usuario: ${error.sqlMessage}`,
+                    HttpStatus.INTERNAL_SERVER_ERROR,
+                );
+            }
         }
     }
 

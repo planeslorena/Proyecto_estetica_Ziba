@@ -48,7 +48,7 @@ export function CardProfessional() {
                         <div key={"square" + item.specility} className='square-carousel' >
                           {item.services.map((service: any) => {
                             return (
-                              <li key={item.services + service}> {service}</li>
+                              <li key={item.services + service}> {service.name}</li>
                             )
                           })}
 

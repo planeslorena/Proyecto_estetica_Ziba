@@ -180,6 +180,11 @@ export const AppointmentList: React.FC<listProps> = ({ data , updateData }) => {
                         </Card.Text>
                       </div>
                     </div>
+                    <div className='container-duration'>
+                    <Card.Text className='time-text'>
+                          Duración del turno:{' '}{card.duration}min
+                    </Card.Text>
+                    </div>
                     {userData?.role == 'client' ?
                        <button onClick={() => cancelAppointment(card.id)}className='button-cancelar-appointment-client'>Cancelar turno</button>
                        
