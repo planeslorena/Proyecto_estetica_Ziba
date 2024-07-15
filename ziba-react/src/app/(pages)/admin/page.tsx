@@ -2,11 +2,14 @@
 import { withRoles } from "@/app/components/HOC/whitRoles";
 import { AdminTable } from "@/app/components/adminTable/adminTable";
 import { Menu } from "@/app/components/nav/nav";
-import { getAllAppointments, getServicesForAdmin } from "@/app/services/Services";
+import { getAllAppointments, getReportForAdmin, getServicesForAdmin } from "@/app/services/Services";
 import { getAllClients, getAllProf } from "@/app/services/User";
-import { useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { Dropdown } from "react-bootstrap";
 import './page.css';
+import { pdf, PDFDownloadLink } from "@react-pdf/renderer";
+import { PDFReport } from "@/app/components/pdfReport/pdfReport";
+import { UserContext } from "@/app/context/user.context";
 
 const columnsClient = [
   {
@@ -125,6 +128,9 @@ function AdminPage() {
   const [filter, setFilter] = useState('Clientes');
   const [data, setData] = useState<any[]>([])
 
+ 
+
+
   const loadClients = async () => {
     const resp = await getAllClients();
     setData(resp);
@@ -207,6 +213,59 @@ function AdminPage() {
     }
   }, [filter])
 
+  const { userData } = useContext(UserContext);
+    const [report, setReport] = useState([]);
+    const [loading, setLoading] = useState<boolean>(true);
+
+  const getServicesAdmin = async () => {
+    try {
+        const report2 = await getReportForAdmin();
+        setReport(report2);
+    } catch (error) {
+        console.error('Error fetching items:', error);
+    } finally {
+        setLoading(false);
+    }
+}
+
+useEffect(() => {
+  getServicesAdmin();
+}, []);  
+
+if (loading) {
+  return <div>Loading...</div>;
+}
+
+const options: Intl.DateTimeFormatOptions = {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+};
+const now = new Date();
+const date = now.toLocaleDateString(undefined, options);
+
+const handleDownload = async () => {
+  // crea una instancia del pdf con la ultima actualizacion
+  const asPdf = pdf(<PDFReport info={report} role={userData?.role} />);
+  
+  try {
+    // genera el blob del pdf
+    const blob = await asPdf.toBlob();
+    
+    // crea un elemento link, setea un nombre de archivo a la propiedad download.
+    // crea un object url para el blob, y desencadena el click en el link.
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `Reporte_Ganancias_${date}.pdf`;
+    link.click();
+    
+    // limpia el object url
+    URL.revokeObjectURL(link.href);
+  } catch (error) {
+    console.error('Error generando PDF:', error);
+  }
+};
+
   return (
     <>
       <header>
@@ -217,15 +276,19 @@ function AdminPage() {
       </header>
 
       <main className="page-admin">
-        <Dropdown>
-          <Dropdown.Toggle >{filter}</Dropdown.Toggle>
-          <Dropdown.Menu>
-            <Dropdown.Item onClick={() => setFilter('Clientes')}>Clientes</Dropdown.Item>
-            <Dropdown.Item onClick={() => setFilter('Profesionales')}>Profesionales</Dropdown.Item>
-            <Dropdown.Item onClick={() => setFilter('Servicios')}>Servicios</Dropdown.Item>
-            <Dropdown.Item onClick={() => setFilter('Turnos')}>Turnos</Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
+        <div className="d-flex justify-content-between">
+          
+          <Dropdown>
+            <Dropdown.Toggle >{filter}</Dropdown.Toggle>
+            <Dropdown.Menu>
+              <Dropdown.Item onClick={() => setFilter('Clientes')}>Clientes</Dropdown.Item>
+              <Dropdown.Item onClick={() => setFilter('Profesionales')}>Profesionales</Dropdown.Item>
+              <Dropdown.Item onClick={() => setFilter('Servicios')}>Servicios</Dropdown.Item>
+              <Dropdown.Item onClick={() => setFilter('Turnos')}>Turnos</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>   
+          <button className='button-pdf' onClick={handleDownload}>Reporte de ganancias<i className="bi bi-download icon-download"></i></button>
+        </div>
         <AdminTable data={data} columns={columns} filter={filter} updateData={updateData} />
       </main>
     </>

@@ -18,6 +18,18 @@ export class ServicesController {
     return this.servicesService.getAllForAdmin();
   }
 
+  @UseGuards(JwtMiddlewareGuard)
+  @Get('/report/admin')
+  async getAllForReportAdmin() {
+    return this.servicesService.getAllForReportAdmin();
+  }
+
+  @UseGuards(JwtMiddlewareGuard)
+  @Get('/report/prof/:id_user')
+  async getAllForReportprof(@Param('id_user', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST, }),) id_user: number) {
+    return this.servicesService.getAllForReportProf(id_user);
+  }
+
   //OBTENER TODOS LOS TURNOS RESERVADOS
   @UseGuards(JwtMiddlewareGuard)
   @Get('/appointments')

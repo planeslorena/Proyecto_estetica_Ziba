@@ -12,6 +12,16 @@ export const getServicesForAdmin = async (): Promise<any> => {
   return response.data;
 }
 
+export const getReportForAdmin = async (): Promise<any> => {
+  const response: AxiosResponse<any, any> = await clientAxios.get('services/report/admin');
+  return response.data;
+}
+
+export const getReportForProf = async (id_user:any): Promise<any> => {
+  const response: AxiosResponse<any, any> = await clientAxios.get('services/report/prof/'+id_user);
+  return response.data;
+}
+
 export const getAllAppointments = async (): Promise<any> => {
   const response: AxiosResponse<any, any> = await clientAxios.get('services/appointments');
   return response.data;

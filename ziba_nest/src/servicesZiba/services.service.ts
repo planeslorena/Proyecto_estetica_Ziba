@@ -68,6 +68,52 @@ export class ServicesService {
         return resultServices;
     }
 
+    async getAllForReportProf(id_user: number): Promise<any[]> {
+
+        //Primero se obtengo los servicio con especialidad y profesional
+        const resultQuery: RowDataPacket[] = await this.dbService.executeSelect(
+            servicesQueries.selectServiceAppointmentsForProf,
+            [id_user],
+        );
+
+        let resultServices: any[] = resultQuery.map((rs: RowDataPacket) => {
+            return {
+                id: rs['id_service'],
+                service: rs['service'],
+                speciality: rs['speciality'],
+                professional: `${rs['name']} ${rs['lastname']}`,
+                phone: rs['phone'],
+                mail: rs['mail'],
+                price: rs['price'],
+                profits: rs['profits'],
+            };
+        });
+
+        return resultServices;
+    }
+
+    async getAllForReportAdmin(): Promise<any[]> {
+
+        //Primero se obtengo los servicio con especialidad y profesional
+        const resultQuery: RowDataPacket[] = await this.dbService.executeSelect(
+            servicesQueries.selectServiceAppointmentsForAdmin,
+            [],
+        );
+
+        let resultServices: any[] = resultQuery.map((rs: RowDataPacket) => {
+            return {
+                id: rs['id_service'],
+                service: rs['service'],
+                speciality: rs['speciality'],
+                professional: `${rs['name']} ${rs['lastname']}`,
+                price: rs['price'],
+                profits: rs['profits'],
+            };
+        });
+
+        return resultServices;
+    }
+
     //Funcion que obtiene todos los turnos reservados de hoy en adelante
     async getAllApponintments(): Promise<any[]> {
 
