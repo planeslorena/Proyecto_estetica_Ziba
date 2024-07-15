@@ -238,7 +238,7 @@ if (loading) {
 
 const options: Intl.DateTimeFormatOptions = {
   year: 'numeric',
-  month: 'long',
+  month: 'short',
   day: 'numeric',
 };
 const now = new Date();
