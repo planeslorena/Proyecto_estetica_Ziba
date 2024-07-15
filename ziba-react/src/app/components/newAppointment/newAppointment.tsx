@@ -1,14 +1,16 @@
 import { useContext, useEffect, useState } from 'react';
 import { PDFReport } from '../pdfReport/pdfReport';
 import './newAppointment.css';
-import { pdf, PDFDownloadLink, usePDF } from '@react-pdf/renderer';
+import { pdf } from '@react-pdf/renderer';
 import { UserContext } from '@/app/context/user.context';
-import { getReportForAdmin, getReportForProf } from '@/app/services/Services';
+import { getReportForProf } from '@/app/services/Services';
+import { useRouter } from 'next/navigation';
 interface props {
     role: string | undefined,
 }
 
 export const NewAppointment: React.FC<props> = ({ role }) => {
+    const router = useRouter();
     const { userData } = useContext(UserContext);
     const [report, setReport] = useState([]);
     const [loading, setLoading] = useState<boolean>(true);
@@ -63,12 +65,12 @@ const options: Intl.DateTimeFormatOptions = {
         }
       };
 
-    return (
+    return(
         <div className="d-flex justify-content-evenly align-items-center client-appointment-button-container">
             {role == 'client' ? (
                 <>
                     <p className='client-appointment-text'>¿No tiene turno todavía?</p>
-                    <button className='client-appointment-button'>Reserve uno ahora</button>
+                    <button className='client-appointment-button' onClick={() => router.push('/appointment')}>Reserve uno ahora</button>
                 </>) : (
                 <>
                     <p className='client-appointment-text'>Reporte de ganancias:</p>

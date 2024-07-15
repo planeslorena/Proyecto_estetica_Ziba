@@ -32,6 +32,13 @@ export class UserController {
     return this.userService.getAllProf();
   }
 
+  //OBTENER LOS DATOS DE UN CLIENTE BUSCANDO POR DNI
+  @UseGuards(JwtMiddlewareGuard)
+  @Get('/clients/:dni')
+  async getClientByDni(@Param('dni', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST, }),) dni: number) {
+    return this.userService.getClientByDni(dni);
+  }
+
   //CREAR USUARIO (AL REGISTRARSE EL CLIENTE O POR PARTE DEL ADMIN)
   @Post()
   async createUser(@Body() body: User) {
