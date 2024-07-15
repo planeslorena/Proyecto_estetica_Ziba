@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { DatabaseService } from '../common/services/db.service';
-import { ResultSetHeader, RowDataPacket } from 'mysql2/promise';
+import { RowDataPacket } from 'mysql2/promise';
 import servicesQueries from './services.queries';
 import Services from 'src/models/services.dto';
 import userQueries from 'src/user/queries/user.queries';
