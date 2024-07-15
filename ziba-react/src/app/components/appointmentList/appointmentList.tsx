@@ -150,7 +150,7 @@ export const AppointmentList: React.FC<listProps> = ({ data , updateData }) => {
                 <div className='card-container'>
                 {userData?.role == 'client' ?
                     <img className='img-appointment-card' src={`imagenes/professionals/${card.speciality}.jpg`} />:
-                    <img className='img-appointment-card' src={`imagenes/professionals/${card.speciality}.png`} />
+                    <img className='img-appointment-card' src={`imagenes/services/${card.speciality}.jpg`} />
                 }
                   <Card.Body>
                     <div>
