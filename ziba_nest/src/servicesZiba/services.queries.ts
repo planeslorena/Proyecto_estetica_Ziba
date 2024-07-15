@@ -67,7 +67,7 @@ const servicesQueries = {
                             join services s 
                             on a.id_user = u.id_user 
                             and a.id_service = s.id_service 
-                            where date > sysdate();`,
+                            where date > Date(sysdate());`,
     selectAppointmentsbyClient: `select a.id_appointment, date,hour,s.name service, s.duration, sp.name speciality, u2.name, u2.lastname 
                                 from appointments a 
                                 join users u 
