@@ -81,7 +81,7 @@ const servicesQueries = {
                                 and p.id_speciality = sp.id_speciality 
                                 and p.id_user = u2.id_user
                                 where u.id_user = ?
-                                and date >= sysdate()
+                                and date >= Date(sysdate())
                                 order by date;`,
     selectAppointmentsbyProf: `select a.id_appointment,a.state,date,hour,s.name service, s.duration, sp.name speciality, u.name, u.lastname, u.phone
                                 from appointments a 
@@ -96,7 +96,7 @@ const servicesQueries = {
                                 and p.id_speciality = sp.id_speciality 
                                 and p.id_user = u2.id_user
                                 where p.id_user = ?
-                                and date >= sysdate()
+                                and date >= Date(sysdate())
                                 order by date;`,
     selectSpecialtiesWhitoutProf: `select s.id_speciality, s.name
                             from specialties s 
