@@ -96,7 +96,8 @@ const servicesQueries = {
                                 and p.id_speciality = sp.id_speciality 
                                 and p.id_user = u2.id_user
                                 where p.id_user = ?
-                                and date >= sysdate();`,
+                                and date >= sysdate()
+                                order by date;`,
     selectSpecialtiesWhitoutProf: `select s.id_speciality, s.name
                             from specialties s 
                             left join (select p.* from professional p inner join users u on p.id_user = u.id_user where u.active = 1) p
