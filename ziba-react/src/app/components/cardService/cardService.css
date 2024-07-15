@@ -48,13 +48,14 @@
 }
 
 .select-service{
-    margin-left: 275px;
+    margin-left: 30%;
 }
 
 .p-que-es{
-    margin: 0px 360px 0px 0px;
+    margin-right: 25%;
+    margin-top: 1%;    
+    
 }
-
 .p-input-service{
     margin-bottom: 0;
 }

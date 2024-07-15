@@ -12,29 +12,29 @@ export const Footer = () => {
                 <div className='redes'>
                     <ul>
                         <li className='li-footer'>
-                            <a href="https://www.facebook.com" target="_blank" className='links'>
-                                <img width="50" height="50" src="https://img.icons8.com/ios-filled/50/f4f3ed/facebook-new.png" alt="facebook-new"  />
+                            <a href="https://www.facebook.com" target="_blank" className='links-footer'>
+                                <img width="50" height="50" src="https://img.icons8.com/ios-filled/50/f4f3ed/facebook-new.png" alt="facebook-new" className='img-footer' />
                                
                             </a>
                             <p className='linkText'>Estética Zibá</p>
                         </li>
                         <li className='li-footer'>
-                            <a href="https://www.instagram.com/" target="_blank" className='links'>
-                                <img width="50" height="50" src="https://img.icons8.com/ios-filled/50/f4f3ed/instagram-new--v1.png" alt="instagram-new--v1" />
+                            <a href="https://www.instagram.com/" target="_blank" className='links-footer'>
+                                <img width="50" height="50" src="https://img.icons8.com/ios-filled/50/f4f3ed/instagram-new--v1.png" alt="instagram-new--v1" className='img-footer'/>
                                 
                             </a>
                             <p className='linkText'>zibá_estética</p>
                         </li>
                         <li className='li-footer' >
-                            <a href="https://web.whatsapp.com/" target="_blank" className='links'>
-                                <img width="50" height="50" src="https://img.icons8.com/ios-filled/50/f4f3ed/whatsapp--v1.png" alt="whatsapp--v1" />
+                            <a href="https://web.whatsapp.com/" target="_blank" className='links-footer'>
+                                <img width="50" height="50" src="https://img.icons8.com/ios-filled/50/f4f3ed/whatsapp--v1.png" alt="whatsapp--v1" className='img-footer'/>
                                 
                             </a>
                             <p className='linkText'>2284222503</p>
                         </li>
                         <li className='li-footer'>
-                            <a href="https://maps.app.goo.gl/KCByA2hp8C2tAaZK9" target="_blank" className='links'>
-                                <img width="50" height="50" src="https://img.icons8.com/ios-filled/50/f4f3ed/marker.png" alt="marker" />
+                            <a href="https://maps.app.goo.gl/KCByA2hp8C2tAaZK9" target="_blank" className='links-footer'>
+                                <img width="50" height="50" src="https://img.icons8.com/ios-filled/50/f4f3ed/marker.png" alt="marker" className='img-footer' />
                                
                             </a>
                             <p className='linkText'>Gral. Paz 2811</p>

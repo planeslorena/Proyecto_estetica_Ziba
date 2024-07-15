@@ -181,17 +181,9 @@ export const AppointmentList: React.FC<listProps> = ({ data , updateData }) => {
                       </div>
                     </div>
                     {userData?.role == 'client' ?
-                      <OverlayTrigger
-                        key='bottom'
-                        placement='bottom'
-                        overlay={
-                          <Tooltip id='tooltip-bottom'>
-                            Cancelar turno
-                          </Tooltip>
-                        }
-                      >
-                        <CloseButton onClick={() => cancelAppointment(card.id)} className='cancel-appointment-cross' aria-label="Hide" />
-                      </OverlayTrigger> :
+                       <button onClick={() => cancelAppointment(card.id)}className='button-cancelar-appointment-client'>Cancelar turno</button>
+                       
+                       :
                       <div className='container-buttons-appointment'>
                         <button onClick={() => checkAppointment(card.id)} disabled = {card.attended.data[0] == 1} className='button-atendido-appointment'>Atendido</button>
                         <button onClick={() => cancelAppointment(card.id)} disabled = {card.attended.data[0] == 1} className='button-cancelar-appointment'>Cancelar turno</button>

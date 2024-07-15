@@ -5,13 +5,17 @@
     
 }
 
-.links{
+.links-footer{
     display: flex;
     padding: 7px 13px;
-    text-decoration: none;
-    justify-content: space-between;
+    text-decoration: none !important;
+    align-items: center;
     justify-content: center;
-    align-items: baseline;
+    transition: 0.5s;
+   
+}
+.links-footer:hover {
+    transform: translateY(-10px);
 }
 
 .contacto {  
@@ -33,16 +37,19 @@
     align-items: flex-start;
     width: fit-content;
     width: 100%;
+    height: 150px;
     
   
 }
 
-a {
-    color:#f4f3ed;
-    text-decoration: none !important;
+
+
+
+
+
+.img-footer{
     
 }
-
 
 .linkText {
     display: flex;
