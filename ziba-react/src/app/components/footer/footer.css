@@ -10,6 +10,7 @@
     padding: 7px 13px;
     text-decoration: none;
     justify-content: space-between;
+    justify-content: center;
     align-items: baseline;
 }
 
@@ -32,6 +33,7 @@
     align-items: flex-start;
     width: fit-content;
     width: 100%;
+    
   
 }
 
@@ -45,19 +47,22 @@ a {
 .linkText {
     display: flex;
     align-self: center;
-    padding-left: 10%;
     font-size: larger;
-    text-overflow: ellipsis;
+   text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
     width: 170px;
     justify-content: center;
-    margin-top: 4%;
+    margin-top: 3%;
     color:#f4f3ed;
     
  
 }
 
+
+.li-footer{
+    display: inline-block;
+}
 
 
 
