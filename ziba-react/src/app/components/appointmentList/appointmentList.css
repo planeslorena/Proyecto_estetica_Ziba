@@ -63,15 +63,12 @@
 
 }
 
-
-
 .container-buttons-appointment{
     text-align: center;
     padding: 4%;
-    margin-top: 5%;
-   
-
+    margin-top: 2%;
 }
+
 .button-atendido-appointment{
     margin-right: 5px;
     border: solid 1px #317435;
@@ -171,8 +168,8 @@
 
 .container-duration{
     height: auto;
-    padding-top: 2%;
-
+    padding-top: 3%;
+    padding-left: 2%;
 }
 
 .cancel-appointment{

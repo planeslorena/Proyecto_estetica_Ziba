@@ -13,7 +13,6 @@ export default function Home() {
         <>
           <header>
             <div>
-             
               <Menu></Menu>
             </div>
     

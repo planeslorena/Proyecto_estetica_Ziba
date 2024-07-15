@@ -159,7 +159,7 @@ export const AppointmentList: React.FC<listProps> = ({ data , updateData }) => {
                         <Card.Title>{card.service}</Card.Title>
                       }
                     </div>
-                    <div className='d-flex  justify-content-between container-info '>
+                    <div className='d-flex justify-content-between container-info '>
                       {userData?.role == 'client' ?
                         <div className='service-text'>
                           <Card.Text className='prof-text'>Prof. {card.professional}</Card.Text>
@@ -182,12 +182,11 @@ export const AppointmentList: React.FC<listProps> = ({ data , updateData }) => {
                     </div>
                     <div className='container-duration'>
                     <Card.Text className='time-text'>
-                          Duración del turno:{' '}{card.duration}min
+                          Duración del turno:{' '}{card.duration}{' '}min
                     </Card.Text>
                     </div>
                     {userData?.role == 'client' ?
-                       <button onClick={() => cancelAppointment(card.id)}className='button-cancelar-appointment-client'>Cancelar turno</button>
-                       
+                       <button onClick={() => cancelAppointment(card.id)}className='button-cancelar-appointment-client'>Cancelar turno</button>   
                        :
                       <div className='container-buttons-appointment'>
                         <button onClick={() => checkAppointment(card.id)} disabled = {card.attended.data[0] == 1} className='button-atendido-appointment'>Atendido</button>
